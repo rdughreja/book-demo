@@ -1,0 +1,106 @@
+1. Create Document
+
+Request Type: POST
+
+Endpoint:/create/:dbName/:collectionName
+
+Description: Creates a new document in the specified database and collection.
+
+Path Parameters:
+
+dbName - The name of the database.
+
+collectionName - The name of the collection.
+
+Request Body: (JSON)
+
+{
+    "_id": "675af56bc5e83c14ffb35efc",
+    "company": "XFasten",
+    "product_name": "XFasten Heavy-Duty Double-Sided Tape",
+    "price": 999.99,
+    "size": "2 inches x 20 yards",
+    "description": "High-tensile strength tape for permanent bonding.",
+    "image_link": "https://m.media-amazon.com/images/I/711ymcG4BKL._SX522_.jpg"
+}
+
+Response Example:
+
+{
+    "message": "Document created successfully",
+    "data": {
+        "_id": "675af56bc5e83c14ffb35efc",
+        "company": "XFasten",
+        "product_name": "XFasten Heavy-Duty Double-Sided Tape",
+        "price": 999.99,
+        "size": "2 inches x 20 yards",
+        "description": "High-tensile strength tape for permanent bonding.",
+        "image_link": "https://m.media-amazon.com/images/I/711ymcG4BKL._SX522_.jpg"
+    }
+}
+
+2. Update Documents
+
+Request Type: PUT
+
+Endpoint:/update/:dbName/:collectionName
+
+Description: Updates documents in the specified database and collection based on the provided filter.
+
+Path Parameters:
+
+dbName - The name of the database.
+
+collectionName - The name of the collection.
+
+Request Body: (JSON)
+
+{
+    "filter": { "company": "XFasten" },
+    "update": { "price": 899.99 }
+}
+
+Response Example:
+
+{
+    "message": "Documents updated successfully",
+    "modifiedCount": 1
+}
+
+3. Delete Documents
+
+Request Type: DELETE
+
+Endpoint:/delete/:dbName/:collectionName
+
+Description: Deletes documents in the specified database and collection based on the provided filter.
+
+Path Parameters:
+
+dbName - The name of the database.
+
+collectionName - The name of the collection.
+
+Request Body: (JSON)
+
+{
+    "filter": { "company": "XFasten" }
+}
+
+Response Example:
+
+{
+    "message": "Documents deleted successfully",
+    "deletedCount": 1
+}
+
+Key Notes
+
+Ensure that Content-Type is set to application/json in the request headers.
+
+Replace :dbName and :collectionName with the actual database and collection names during API requests.
+
+For successful database connections, make sure your MongoDB connection string and cluster settings are correctly configured.
+
+This concludes the documentation for the CRUD API routes.
+

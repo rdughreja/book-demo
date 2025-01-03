@@ -74,49 +74,119 @@ const createDocument = async (req, res) => {
 };
 
 // Update documents
+// const updateDocuments = async (req, res) => {
+//   const { dbName, collectionName } = req.params;
+//   const { filter, update } = req.body;
+
+//   if (!isValidDatabaseAndCollection(dbName, collectionName)) {
+//     return res.status(404).send('Invalid database or collection.');
+//   }
+
+//   try {
+//     await client.connect();
+//     const db = client.db(dbName);
+//     const collection = db.collection(collectionName);
+//     const result = await collection.updateMany(filter, { $set: update });
+//     res.json({ message: 'Update successful', matchedCount: result.matchedCount, modifiedCount: result.modifiedCount });
+//   } catch (err) {
+//     console.error('Error updating documents:', err);
+//     res.status(500).send('Error updating documents.');
+//   } finally {
+//     await client.close();
+//   }
+// };
+
+// const updateDocuments = async (req, res) => {
+//     const { dbName, collectionName } = req.params;
+//     const { filter, update } = req.body;
+
+//     if (!filter || !update) {
+//         return res.status(400).json({ error: "Filter and update data are required." });
+//     }
+
+//     try {
+//         const db = client.db(dbName); // Assuming `client` is your MongoDB client instance
+//         const collection = db.collection(collectionName);
+
+//         const result = await collection.updateMany(filter, { $set: update });
+
+//         if (result.matchedCount === 0) {
+//             return res.status(404).json({ error: "No documents matched the filter." });
+//         }
+
+//         res.status(200).json({
+//             message: "Documents updated successfully",
+//             matchedCount: result.matchedCount,
+//             modifiedCount: result.modifiedCount
+//         });
+//     } catch (error) {
+//         console.error(error);
+//         res.status(500).json({ error: "An error occurred while updating documents." });
+//     }
+// };
+
 const updateDocuments = async (req, res) => {
   const { dbName, collectionName } = req.params;
   const { filter, update } = req.body;
 
-  if (!isValidDatabaseAndCollection(dbName, collectionName)) {
-    return res.status(404).send('Invalid database or collection.');
+  if (!filter || !update) {
+      return res.status(400).json({ error: "Filter and update data are required." });
   }
 
   try {
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-    const result = await collection.updateMany(filter, { $set: update });
-    res.json({ message: 'Update successful', matchedCount: result.matchedCount, modifiedCount: result.modifiedCount });
-  } catch (err) {
-    console.error('Error updating documents:', err);
-    res.status(500).send('Error updating documents.');
-  } finally {
-    await client.close();
+      const db = client.db(dbName); // Assuming `client` is your MongoDB client instance
+      const collection = db.collection(collectionName);
+
+      const result = await collection.updateMany(filter, { $set: update });
+
+      if (result.matchedCount === 0) {
+          return res.status(404).json({ error: "No documents matched the filter." });
+      }
+
+      res.status(200).json({
+          message: "Documents updated successfully",
+          matchedCount: result.matchedCount,
+          modifiedCount: result.modifiedCount
+      });
+  } catch (error) {
+      console.error("Error during update:", error); // Log the actual error
+      res.status(500).json({ error: "An error occurred while updating documents." });
   }
 };
+
 
 // Delete documents
+// 
+
 const deleteDocuments = async (req, res) => {
   const { dbName, collectionName } = req.params;
-  const filter = req.body;
+  const { filter } = req.body;
 
-  if (!isValidDatabaseAndCollection(dbName, collectionName)) {
-    return res.status(404).send('Invalid database or collection.');
+  console.log("Delete Request - Filter:", filter);
+
+  if (!filter) {
+      return res.status(400).json({ error: "Filter is required for deletion." });
   }
 
   try {
-    await client.connect();
-    const db = client.db(dbName);
-    const collection = db.collection(collectionName);
-    const result = await collection.deleteMany(filter);
-    res.json({ message: 'Delete successful', deletedCount: result.deletedCount });
-  } catch (err) {
-    console.error('Error deleting documents:', err);
-    res.status(500).send('Error deleting documents.');
-  } finally {
-    await client.close();
+      const db = client.db(dbName);
+      const collection = db.collection(collectionName);
+
+      console.log("Documents in Collection Before Deletion:", await collection.find({}).toArray());
+
+      const result = await collection.deleteMany(filter);
+
+      console.log("Deletion Result:", result);
+
+      res.status(200).json({
+          message: result.deletedCount > 0 ? "Delete successful" : "No documents matched the filter.",
+          deletedCount: result.deletedCount
+      });
+  } catch (error) {
+      console.error("Error during deletion:", error);
+      res.status(500).json({ error: "An error occurred while deleting documents." });
   }
 };
+
 
 module.exports = { fetchDocuments, createDocument, updateDocuments, deleteDocuments };

@@ -4,6 +4,8 @@ Request Type: POST
 
 Endpoint:/create/:dbName/:collectionName
 
+http://localhost:5000/api/fetch/Adhesives_and_Tapes/DoubleSidedTape
+
 Description: Creates a new document in the specified database and collection.
 
 Path Parameters:
@@ -15,7 +17,7 @@ collectionName - The name of the collection.
 Request Body: (JSON)
 
 {
-    "_id": "675af56bc5e83c14ffb35efc",
+    "_id": "675af56bc5e83c14ffb35efc", 
     "company": "XFasten",
     "product_name": "XFasten Heavy-Duty Double-Sided Tape",
     "price": 999.99,

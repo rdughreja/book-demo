@@ -106,3 +106,28 @@ For successful database connections, make sure your MongoDB connection string an
 
 This concludes the documentation for the CRUD API routes.
 
+4. POS Operations
+
+Create Sale
+POST /pos/sale
+{
+    "items": [
+        {
+            "productId": "123",
+            "quantity": 2,
+            "price": 999.99,
+            "name": "XFasten Heavy-Duty Double-Sided Tape"
+        }
+    ],
+    "totalAmount": 1999.98,
+    "paymentMethod": "CASH",
+    "customerId": "customer123"
+}
+
+Update Inventory
+POST /pos/inventory/update
+{
+    "productId": "123",
+    "quantity": 2,
+    "operation": "decrease"
+}

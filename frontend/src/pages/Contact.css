@@ -1,0 +1,167 @@
+/* .contact-us {
+    padding: 50px 20px;
+    background-color: #f8f9fa;
+    text-align: center;
+  }
+  
+  .contact-us h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #002147;
+  }
+  
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  input,
+  textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  button {
+    background-color: #ff9800;
+    color: white;
+    padding: 10px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+    border-radius: 5px;
+  }
+  
+  button:hover {
+    background-color: #ffa726;
+  }
+   */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arial", sans-serif;
+  }
+  
+  .contact-container {
+    background-color: #0f172a;
+    color: #fff;
+    padding: 40px 20px;
+    text-align: center;
+    height: 100vh;
+    margin: auto;
+  }
+  
+  .contact-title {
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .contact-subtitle {
+    font-size: 1.1rem;
+    margin-bottom: 40px;
+    opacity: 0.8;
+  }
+  
+  /* Contact Content Layout */
+  .contact-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  /* Contact Form */
+  .contact-form {
+    flex: 1;
+    max-width: 500px;
+    
+  }
+  
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  form label {
+    text-align: left;
+    font-size: 1rem;
+    margin-bottom: 1px;
+    opacity: 0.8;
+  }
+  
+  form input,
+  form textarea {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    outline: none;
+  }
+  
+  form input {
+    height: 40px;
+  }
+  
+  form textarea {
+    resize: none;
+    height: 120px;
+  }
+  
+  .send-btn {
+    background-color: #5591f0;
+    color: #001b48;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .send-btn:hover {
+    background-color: #5591f0;
+    color: #fff;
+  }
+  
+  /* Contact Details */
+  .contact-details {
+    flex: 1;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    text-align: left;
+  }
+  
+  .contact-icon {
+    font-size: 2rem;
+    color: #f8b400;
+  }
+  
+  .contact-item h4 {
+    margin-bottom: 5px;
+    font-size: 1.1rem;
+  }
+  
+  .contact-item p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+  

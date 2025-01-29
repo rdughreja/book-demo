@@ -407,7 +407,7 @@ const getLowStockProducts = async (req, res) => {
 // Reports and Analytics
 const getDailySalesReport = async (req, res) => {
     const { date } = req.query;
-    try {
+      try {
         await client.connect();
         const db = client.db('Adhesives_and_Tapes');
         const startDate = new Date(date);

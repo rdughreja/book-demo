@@ -236,21 +236,12 @@ const getSales = async (req, res) => {
 
 const getSaleDetails = async (req, res) => {
     const { saleId } = req.params;
-
-    if (!ObjectId.isValid(saleId)) {
-        return res.status(400).json({ error: 'Invalid sale ID format' });
-    }
-
     try {
         await client.connect();
         const db = client.db('Adhesives_and_Tapes');
         const salesCollection = db.collection('Sales');
-
+        
         const sale = await salesCollection.findOne({ _id: new ObjectId(saleId) });
-        if (!sale) {
-            return res.status(404).json({ error: 'Sale not found' });
-        }
-
         res.status(200).json(sale);
     } catch (error) {
         res.status(500).json({ error: error.message });
@@ -407,7 +398,7 @@ const getLowStockProducts = async (req, res) => {
 // Reports and Analytics
 const getDailySalesReport = async (req, res) => {
     const { date } = req.query;
-      try {
+    try {
         await client.connect();
         const db = client.db('Adhesives_and_Tapes');
         const startDate = new Date(date);
@@ -432,29 +423,29 @@ const getDailySalesReport = async (req, res) => {
     }
 };
 
-const trackEmployeeSales = async (req, res) => {
-    const { employeeId, startDate, endDate } = req.query;
-    try {
-        await client.connect();
-        const db = client.db('Adhesives_and_Tapes');
-        const sales = await db.collection('Sales')
-            .find({
-                'employeeId': employeeId,
-                created_at: {
-                    $gte: new Date(startDate),
-                    $lt: new Date(endDate)
-                }
-            })
-            .toArray();
+// const trackEmployeeSales = async (req, res) => {
+//     const { employeeId, startDate, endDate } = req.query;
+//     try {
+//         await client.connect();
+//         const db = client.db('Adhesives_and_Tapes');
+//         const sales = await db.collection('Sales')
+//             .find({
+//                 'employeeId': employeeId,
+//                 created_at: {
+//                     $gte: new Date(startDate),
+//                     $lt: new Date(endDate)
+//                 }
+//             })
+//             .toArray();
             
-        const totalSales = sales.reduce((acc, sale) => acc + sale.totalAmount, 0);
-        res.status(200).json({ sales, totalSales });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    } finally {
-        await client.close();
-    }
-};
+//         const totalSales = sales.reduce((acc, sale) => acc + sale.totalAmount, 0);
+//         res.status(200).json({ sales, totalSales });
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     } finally {
+//         await client.close();
+//     }
+// };
 
 const getTopSellingProducts = async (req, res) => {
     const { dbName, collectionName } = req.params;
@@ -518,6 +509,6 @@ module.exports = {
     getInventoryStatus, 
     getLowStockProducts,
     getDailySalesReport,
-    trackEmployeeSales,
+    // trackEmployeeSales,
     getTopSellingProducts
 };

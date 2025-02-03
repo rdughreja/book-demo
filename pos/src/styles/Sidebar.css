@@ -1,0 +1,142 @@
+
+/* Container for the sidebar */
+.sidebar {
+    min-width: 150px;
+    height: 100%;
+    background-color: #292C2D;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    font-family: Arial, sans-serif;
+    padding: 10px 0;
+    border-radius: 0 30px 30px 0;
+    overflow: hidden;
+  }
+
+  .sidebar-container
+  {
+    max-width: 100%;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    background-color: #00163B;
+  }
+  .logo{
+    width: 100wh;
+    height: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    padding-top: 30px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+  }
+
+  .logo-text{
+    color:#608BC1;
+    font-size: 18px;
+  }
+
+  .sidebar-menu {
+    flex-grow: 1;
+  }
+
+  .menu-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px 0px;
+    margin: 0px 10px; /* Adjusts spacing around each menu-item */
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    transition: all 0.3s;
+    margin-top: 20px;
+  }
+
+  .sidebar a {
+    text-decoration: none;
+  }  
+  
+.icon-style {
+  font-size: 12px;
+  margin-bottom: 5px;
+  background-color: white;  /* Set background to white */
+  color: #608BC1;
+  border-radius: 50%;       /* Make it circular */
+  padding: 8px;            /* Add padding for spacing */
+  display: flex;            /* Use flexbox to center the icon */
+  align-items: center;      /* Vertically center the icon */
+  justify-content: center;  /* Horizontally center the icon */
+}
+
+.menu-text {
+  font-size: 15px;
+}
+
+/* Horizontal Line Inside Each Menu Item */
+.menu-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  bottom: -10px; /* Adds space below the menu-item for the line */
+  left: 10%;
+  width: 80%;
+  height: 1px;
+  background-color: #555;
+}
+
+.menu-item:hover {
+  background-color: #d17c7c;
+  color: white;
+}
+
+.active {
+  background-color: #608BC1;
+  width: 100px;
+  color: black;
+}
+
+/* Footer Section */
+.sidebar-footer {
+  /* padding: 200px; */
+  margin-top: 200px;
+}
+
+.logout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 0;
+  margin: 5px 10px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.logout .icon-style {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.logout-text {
+  font-size: 14px;
+}
+
+.logout:hover {
+  color: #ff4d4d;
+}
+.icon{
+  font-size: 19px;
+  margin-bottom: 5px;
+  color: #608BC1;
+  border-radius: 50%;       /* Make it circular */
+  padding: 10px;            /* Add padding for spacing */
+  display: flex;            /* Use flexbox to center the icon */
+  align-items: center;      /* Vertically center the icon */
+  justify-content: center;  /* Horizontally center the icon */
+}

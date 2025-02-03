@@ -1,0 +1,62 @@
+.staff-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  .divider2 {
+    height: 1px;
+    background-color: #b2a3a3;
+    border: none;
+    margin: 10px 0;
+  }
+  
+  .staff-form label {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .staff-form input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #605F5F;
+    background-color: #605F5F ;
+    border-radius: 4px;
+    font-size: 14px;
+  }
+  
+  .btn2 {
+    display: flex;
+    justify-content: start;
+    margin-top: 15px;
+    gap: 20px;
+  }
+  
+  .cancel-button,
+  .submit-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .cancel-button {
+    background-color: #3d3d3d;
+    color: white;
+  }
+  
+  .submit-button {
+    background-color: #6489b1;
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #777;
+  }
+  
+  .submit-button:hover {
+    background-color: #4774a3;
+  }
+  

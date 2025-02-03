@@ -1,0 +1,121 @@
+.right-side-menu {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: auto;
+  background-color: #0A1835;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+  color: white;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-side-menu.open {
+  right: 0;
+  overflow-y: auto;
+  height: 550px;
+}
+
+.menu-header2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.icon6 {
+  background-color: #494a4b;
+  border-radius: 50%;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.divider {
+  height: 1px;
+  background-color: #333232;
+  margin: 10px 0;
+}
+
+.category-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+label {
+  font-size: 14px;
+  font-weight: bold;
+  color: rgb(118, 151, 169);
+}
+
+input,select {
+  width: 95%;
+  padding: 8px;
+  border: 1px solid rgb(96, 95, 95);
+  background-color: rgb(96, 95, 95);
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+/* Ensure Price and Stock Quantity fields match Grade and Subject */
+.price-stock-row {
+  display: flex;
+  gap: 32px;
+}
+
+.price-stock-group {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.btn2 {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.cancel-button,
+.submit-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.cancel-button {
+  background-color: #888;
+  color: white;
+}
+
+.submit-button {
+  background-color: #007bff;
+  color: white;
+}
+
+.cancel-button:hover {
+  background-color: #777;
+}
+
+.submit-button:hover {
+  background-color: #0056b3;
+}

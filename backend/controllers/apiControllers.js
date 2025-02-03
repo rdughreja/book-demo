@@ -27,6 +27,26 @@ const isValidDatabaseAndCollection = (dbName, collectionName) => {
   return allowedDatabases.includes(dbName) && allowedCollections[dbName]?.includes(collectionName);
 };
 
+const allowedDatabases = [
+  'cbseEnglishMedium', 'cbseEnglishMediumWorkbook', 'cbseHindiMedium', 'cbseHindiMediumWorkbook', 'gsebEnglishMedium', 'gsebEnglishMediumWorkbook', 'gsebGujaratiMedium', 'gsebGujaratiMediumWorkbook', 'icseEnglishMedium', 'icseEnglishMediumWorkbook'
+  
+];
+
+const allowedCollections = {
+ 
+  'cbseEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'cbseEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'cbseHindiMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'cbseHindiMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'gsebEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'gsebEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'gsebGujaratiMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'gsebGujaratiMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'icseEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+  'icseEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+};
+
+
 // Fetch documents
 const fetchDocuments = async (req, res) => {
   const { dbName, collectionName } = req.params;
@@ -140,9 +160,38 @@ const deleteDocuments = async (req, res) => {
   }
 };
 
+const fetchAllBooks = async (req, res) => {
+  try {
+    await client.connect();
+    let allBooks = [];
+
+    for (const dbName of allowedDatabases) {
+      const db = client.db(dbName);
+      const collections = allowedCollections[dbName];
+
+      for (const collectionName of collections) {
+        const collection = db.collection(collectionName);
+        const books = await collection.find({}).toArray();
+        allBooks = allBooks.concat(books);
+      }
+    }
+
+    res.status(200).json(allBooks);
+  } catch (err) {
+    console.error('Error fetching books:', err);
+    res.status(500).send('Error fetching books.');
+  } finally {
+    await client.close();
+  }
+};
+
+
 module.exports = {
   fetchDocuments,
   createDocument,
   updateDocuments,
-  deleteDocuments
+  deleteDocuments,
+  fetchAllBooks
 };
+
+

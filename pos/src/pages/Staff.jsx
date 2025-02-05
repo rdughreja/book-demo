@@ -44,9 +44,15 @@ const Staff = () => {
     fetchStaffData();
   }, []);
 
-  const deleteStaff = (id) => {
-    const updatedStaff = staffData.filter((member) => member.id !== id);
-    setStaffData(updatedStaff);
+  const deleteStaff = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/employees/delete`, { data: { id } });
+      setStaffData(staffData.filter((member) => member.id !== id));
+      alert('Staff member deleted successfully!');
+    } catch (error) {
+      console.error('Error deleting staff member:', error);
+      alert('Failed to delete staff member. Please try again.');
+    }
   };
 
   const updateAttendanceStatus = (id, newStatus) => {
@@ -118,8 +124,8 @@ const Staff = () => {
             </thead>
             <tbody>
               {staffData.map((member) => (
-                <tr key={member.ID}>
-                  <td>{member.ID}</td>
+                <tr key={member.id}>
+                  <td>{member.id}</td>
                   <td>{member.name}</td>
                   <td>{member.email}</td>
                   <td>{member.phone}</td>
@@ -127,8 +133,6 @@ const Staff = () => {
                   <td>{member.salary}</td>
                   <td>{member.timings}</td>
                   <td>
-                    <i className="fa-solid fa-eye view"></i> 
-                    <i className="fa-solid fa-pencil edit1" onClick={() => handleToggle('attendance')}></i>
                     <i className="fa-solid fa-trash delete1" onClick={() => deleteStaff(member.id)}></i>
                   </td>
                 </tr>

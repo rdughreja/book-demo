@@ -1,26 +1,37 @@
-import React,{useState} from 'react'
-import '../styles/Addstaff.css'
-    
+import React, { useState } from 'react';
+import axios from 'axios';
+import '../styles/Addstaff.css';
 
-const Addstaff = ({isOpen,onClose}) => {
+const Addstaff = ({ isOpen, onClose }) => {
+  const [staff, setStaff] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    age: "",
+    salary: "",
+    position: "",
+    timings: "",
+  });
 
-    const [staff, setStaff] = useState({
-        name: "",
-        email: "",
-        phone: "",
-        salary: "",
-      });
-    
-      const handleChange = (e) => {
-        setStaff({ ...staff, [e.target.name]: e.target.value });
-      };
-    
-      const handleSubmit = (e) => {
-        e.preventDefault();
-        console.log("New Staff Added:", staff);
-        alert("Staff member added successfully!");
-      };
-    
+  const handleChange = (e) => {
+    setStaff({ ...staff, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post('http://localhost:5000/employees/add', staff);
+      console.log("New Staff Added:", response.data);
+      alert("Staff member added successfully!");
+      onClose(); // Close the form after successful submission
+    } catch (error) {
+      console.error('Error adding staff member:', error);
+      alert('Failed to add staff member. Please try again.');
+    }
+  };
+
+  if (!isOpen) return null;
 
   return (
     <div className={`right-side-menu ${isOpen ? "open" : ""}`}>
@@ -31,6 +42,9 @@ const Addstaff = ({isOpen,onClose}) => {
       <hr className="divider2" />
 
       <form className="staff-form" onSubmit={handleSubmit}>
+        <label>ID:</label>
+        <input type="text" name="id" value={staff.id} onChange={handleChange} required />
+
         <label>Name:</label>
         <input type="text" name="name" value={staff.name} onChange={handleChange} required />
 
@@ -40,8 +54,17 @@ const Addstaff = ({isOpen,onClose}) => {
         <label>Phone:</label>
         <input type="tel" name="phone" value={staff.phone} onChange={handleChange} required />
 
+        <label>Age:</label>
+        <input type="text" name="age" value={staff.age} onChange={handleChange} required />
+
         <label>Salary:</label>
         <input type="number" name="salary" value={staff.salary} onChange={handleChange} required />
+
+        <label>Position:</label>
+        <input type="text" name="position" value={staff.position} onChange={handleChange} required />
+
+        <label>Timings:</label>
+        <input type="text" name="timings" value={staff.timings} onChange={handleChange} required />
 
         <div className="btn2">
           <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
@@ -49,7 +72,7 @@ const Addstaff = ({isOpen,onClose}) => {
         </div>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default Addstaff
+export default Addstaff;

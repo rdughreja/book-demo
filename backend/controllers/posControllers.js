@@ -519,6 +519,5 @@ module.exports = {
     getInventoryStatus, 
     getLowStockProducts,
     getDailySalesReport,
-    // trackEmployeeSales,
     getTopSellingProducts
 };

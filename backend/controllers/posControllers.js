@@ -7,7 +7,7 @@ const isValidDatabaseAndCollection = (dbName, collectionName) => {
     'Adhesives_and_Tapes', 'Art_and_Craft_Supplies', 'Desk_Accessories',
     'Educational_Supplies', 'Filing_and_Storage', 'Office_Supplies',
     'Paper_Products', 'Presentation_and_Display', 'Technology_Accessories',
-    'Writing_Instruments', 'sample_mflix'
+    'Writing_Instruments', 'sample_mflix', 'cbseEnglishMedium', 'cbseEnglishMediumWorkbook', 'cbseHindiMedium', 'cbseHindiMediumWorkbook', 'gsebEnglishMedium', 'gsebEnglishMediumWorkbook', 'gsebGujaratiMedium', 'gsebGujaratiMediumWorkbook', 'icseEnglishMedium', 'icseEnglishMediumWorkbook'
   ];
 
   const allowedCollections = {
@@ -21,7 +21,17 @@ const isValidDatabaseAndCollection = (dbName, collectionName) => {
     'Presentation_and_Display': ['Whiteboards', 'BulletinBoards', 'EaselStands', 'FlipCharts', 'ProjectorScreens'],
     'Technology_Accessories': ['CableTies', 'LaptopStands', 'StylusPens', 'USBDrives', 'WirelessChargers'],
     'Writing_Instruments': ['GelPens', 'BallpointPens', 'Highlighters', 'MechanicalPencils', 'WhiteboardMarkers'],
-    'sample_mflix': ['comments', 'embedded_movies', 'movies', 'sessions', 'theaters', 'users']
+    'sample_mflix': ['comments', 'embedded_movies', 'movies', 'sessions', 'theaters', 'users'],
+    'cbseEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'cbseHindiMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'cbseHindiMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'gsebEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'gsebEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'gsebGujaratiMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'gsebGujaratiMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'icseEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'icseEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
+    'cbseEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
   };
 
   return allowedDatabases.includes(dbName) && allowedCollections[dbName]?.includes(collectionName);

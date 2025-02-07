@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Staff.css'
 import Addstaff from '../componets/Addstaff';
+import Editstaff from '../componets/Editstaff';
 
 const Staff = () => {
 
@@ -13,6 +14,7 @@ const Staff = () => {
     setActiveTab(tab);
   };
 
+ 
   const handleMenuToggle = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -43,6 +45,24 @@ const Staff = () => {
 
     fetchStaffData();
   }, []);
+
+
+  // const editStaff = async (id, updatedData) => {
+  //   try {
+  //     const response = await axios.put(`http://localhost:5000/employees/update/${id}`, updatedData);
+      
+  //     // Update local state with the modified staff member
+  //     setStaffData(staffData.map((member) => 
+  //       member.id === id ? { ...member, ...updatedData } : member
+  //     ));
+  
+  //     alert('Staff member updated successfully!');
+  //   } catch (error) {
+  //     console.error('Error updating staff member:', error);
+  //     alert('Failed to update staff member. Please try again.');
+  //   }
+  // };
+  
 
   const deleteStaff = async (id) => {
     try {
@@ -118,6 +138,7 @@ const Staff = () => {
                 <th>Phone</th>
                 <th>Age</th>
                 <th>Salary</th>
+                <th>Position</th>
                 <th>Timings</th>
                 <th>Actions</th>
               </tr>
@@ -131,8 +152,10 @@ const Staff = () => {
                   <td>{member.phone}</td>
                   <td>{member.age} yr</td>
                   <td>{member.salary}</td>
+                  <td>{member.position}</td>
                   <td>{member.timings}</td>
                   <td>
+                    <i className="fa-solid fa-pencil edit1"  onClick={() => handleEditClick(member.id)}></i>
                     <i className="fa-solid fa-trash delete1" onClick={() => deleteStaff(member.id)}></i>
                   </td>
                 </tr>
@@ -141,45 +164,6 @@ const Staff = () => {
           </table>
         )}
 
-        {activeTab === 'attendance' && (
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Timings</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attendanceData.map((record) => (
-                <tr key={record.id}>
-                  <td>{record.id}</td>
-                  <td>{record.name}</td>
-                  <td>{record.date}</td>
-                  <td>{record.timings}</td>
-                  <td>
-                    {record.status ? (
-                      <button className={`status ${record.status.toLowerCase()}`}>
-                        {record.status}
-                      </button>
-                    ) : (
-                      <>
-                        <button className="status present" onClick={() => updateAttendanceStatus(record.id, 'Present')}>
-                          Present
-                        </button>
-                        <button className="status absent" onClick={() => updateAttendanceStatus(record.id, 'Absent')}>
-                          Absent
-                        </button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
       </div> 
     </div> /*staff-container*/
   );

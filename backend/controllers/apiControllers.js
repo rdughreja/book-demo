@@ -185,13 +185,45 @@ const fetchAllBooks = async (req, res) => {
   }
 };
 
+// Fetch books by category
+const fetchBooksByCategory = async (req, res) => {
+  const { category } = req.query;
+
+  if (!category) {
+    return res.status(400).send('Category is required.');
+  }
+
+  try {
+    await client.connect();
+    let books = [];
+
+    for (const dbName of allowedDatabases) {
+      const db = client.db(dbName);
+      const collections = allowedCollections[dbName];
+
+      for (const collectionName of collections) {
+        const collection = db.collection(collectionName);
+        const categoryBooks = await collection.find({ category }).toArray();
+        books = books.concat(categoryBooks);
+      }
+    }
+
+    res.status(200).json(books);
+  } catch (err) {
+    console.error('Error fetching books by category:', err);
+    res.status(500).send('Error fetching books by category.');
+  } finally {
+    await client.close();
+  }
+};
 
 module.exports = {
   fetchDocuments,
   createDocument,
   updateDocuments,
   deleteDocuments,
-  fetchAllBooks
+  fetchAllBooks,
+  fetchBooksByCategory
 };
 
 

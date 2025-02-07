@@ -34,7 +34,7 @@ const Addstaff = ({ isOpen, onClose }) => {
   if (!isOpen) return null;
 
   return (
-    <div className={`right-side-menu ${isOpen ? "open" : ""}`}>
+    <div className={`add-staff-menu ${isOpen ? "open" : ""}`}>
       <div className="menu-header2">
         <h3>Add New Staff</h3>
         <i className="fa-solid fa-arrow-left icon6" style={{ fontSize: "11px", color: "#00163B" }} onClick={onClose}></i>
@@ -55,16 +55,16 @@ const Addstaff = ({ isOpen, onClose }) => {
         <input type="tel" name="phone" value={staff.phone} onChange={handleChange} required />
 
         <div className="form-row3">
-  <div className="input-group">
-    <label>Age:</label>
-    <input type="text" name="age" value={staff.age} onChange={handleChange} required />
-  </div>
+          <div className="input-group">
+            <label>Age:</label>
+            <input type="text" name="age" value={staff.age} onChange={handleChange} required />
+          </div>
 
-  <div className="input-group">
-    <label>Salary:</label>
-    <input type="number" name="salary" value={staff.salary} onChange={handleChange} required />
-  </div>
-</div>
+          <div className="input-group">
+            <label>Salary:</label>
+            <input type="number" name="salary" value={staff.salary} onChange={handleChange} required />
+          </div>
+        </div>
 
         <label>Position:</label>
         <input type="text" name="position" value={staff.position} onChange={handleChange} required />

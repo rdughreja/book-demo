@@ -1,5 +1,5 @@
 // import React, { useState } from "react";
- import '../styles/RightSideMenu.css'
+import '../styles/RightSideMenu.css'
 
 // const RightSideMenu = ({ isOpen, onClose }) => {
   
@@ -84,7 +84,7 @@ const RightSideMenu = ({ isOpen, onClose }) => {
     <div className={`right-side-menu ${isOpen ? "open" : ""}`}>
       <div className="menu-header2">
         <h3>Add New Book</h3>
-        <i className="fa-solid fa-arrow-left icon6" style={{ fontSize: "11px", color: 'white' }} onClick={onClose}></i>
+        <i className="fa-solid fa-arrow-left icon6" style={{ fontSize: "11px", color: '#00163B' }} onClick={onClose}></i>
       </div>
       <hr className="divider" />
       

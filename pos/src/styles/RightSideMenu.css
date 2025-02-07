@@ -4,7 +4,7 @@
   right: -400px;
   width: 400px;
   height: auto;
-  background-color: #0A1835;
+  background-color: white;
   box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
   color: white;
   transition: right 0.3s ease-in-out;
@@ -24,6 +24,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  color: #00163B;
 }
 
 .icon6 {
@@ -48,10 +49,10 @@
   gap: 15px;
 }
 
-label {
+.form-group label {
   font-size: 14px;
   font-weight: bold;
-  color: rgb(118, 151, 169);
+  color: white;
 }
 
 input,select {

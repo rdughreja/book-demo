@@ -203,13 +203,13 @@ const Reports = () => {
     <div className="report-container">
         <div className="report-header">
               <div className="report-title"> 
-                 <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'white'}}></i>
+                 <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i>
                  <h1>Reports</h1>
               </div>
          
                <div className="report-two-icon">
                   <div className="bell">
-                      <i className="fa-solid fa-bell note-bell" onClick={handleNotificationClick}></i>
+                      <i className="fa-solid fa-bell note-bell" style={{color:"#00163B"}} onClick={handleNotificationClick}></i>
                   </div>
                   <div className="profile">
                   <img src="https://placehold.co/40x40" alt="User profile" className='profile-img' onClick={handleProfileClick}/>

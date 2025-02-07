@@ -3,16 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Books.css';
 import RightSideMenu from '../componets/RightSideMenu';
+import EditBook from '../componets/EditBook';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
-  const [activeCategory, setActiveCategory] = useState(null);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [activeCategory, setActiveCategory] = useState('All');
+  const [isRightMenuOpen, setIsRightMenuOpen] = useState(false);
+  const [isEditBookOpen, setIsEditBookOpen] = useState(false);
+  const [selectedBook, setSelectedBook] = useState(null);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch all books from the API
     const fetchBooks = async () => {
       try {
         const response = await axios.get('http://localhost:5000/api/fetch/allBooks');
@@ -21,60 +23,52 @@ const Books = () => {
         console.error('Error fetching books:', error);
       }
     };
-
     fetchBooks();
   }, []);
 
   const handleCardClick = async (category) => {
-    if (category === 'All') {
-      setActiveCategory(null); // Show all books
-      try {
-        const response = await axios.get('http://localhost:5000/api/fetch/allBooks');
-        setBooks(response.data);
-      } catch (error) {
-        console.error('Error fetching books:', error);
-      }
-    } else {
-      setActiveCategory(category);
-      // Fetch books for the specific category
-      try {
-        const response = await axios.get(`http://localhost:5000/api/fetch/books?category=${category}`);
-        setBooks(response.data);
-      } catch (error) {
-        console.error('Error fetching books:', error);
-      }
+    setActiveCategory(category);
+    try {
+      const response = await axios.get(
+        category === 'All'
+          ? 'http://localhost:5000/api/fetch/allBooks'
+          : `http://localhost:5000/api/fetch/books?category=${category}`
+      );
+      setBooks(response.data);
+    } catch (error) {
+      console.error('Error fetching books:', error);
     }
   };
 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
+  const handleRightMenuToggle = () => {
+    setIsRightMenuOpen(true); 
+    setIsEditBookOpen(false); 
   };
 
-  const categories = [
-    { category: 'All', icon: "fa-solid fa-search", title: "All", count: "200k Books" },
-    { category: 'cbseEnglishMedium', icon: "fa-solid fa-search", title: "cbseEnglishMedium", count: "50k Books" },
-    { category: 'cbseEnglishMediumWorkbook', icon: "fa-solid fa-search", title: "cbseEnglishMediumWorkbook", count: "30k Books" },
-    { category: 'cbseHindiMedium', icon: "fa-solid fa-search", title: "cbseHindiMedium", count: "40k Books" },
-    { category: 'cbseHindiMediumWorkbook', icon: "fa-solid fa-search", title: "cbseHindiMediumWorkbook", count: "25k Books" },
-    { category: 'gsebEnglishMedium', icon: "fa-solid fa-search", title: "gsebEnglishMedium", count: "35k Books" },
-    { category: 'gsebEnglishMediumWorkbook', icon: "fa-solid fa-search", title: "gsebEnglishMediumWorkbook", count: "20k Books" },
-    { category: 'gsebGujaratiMedium', icon: "fa-solid fa-search", title: "gsebGujaratiMedium", count: "45k Books" },
-    { category: 'gsebGujaratiMediumWorkbook', icon: "fa-solid fa-search", title: "gsebGujaratiMediumWorkbook", count: "15k Books" },
-    { category: 'icseEnglishMedium', icon: "fa-solid fa-search", title: "icseEnglishMedium", count: "55k Books" },
-    { category: 'icseEnglishMediumWorkbook', icon: "fa-solid fa-search", title: "icseEnglishMediumWorkbook", count: "35k Books" },
-  ];
+  const handleEditBookToggle = (book) => {
+    setSelectedBook(book); 
+    setIsEditBookOpen(true); 
+    setIsRightMenuOpen(false); 
+  };
+
+  const handleUpdateBook = (updatedBook) => {
+    setBooks((prevBooks) => 
+      prevBooks.map((book) => (book.sku === updatedBook.sku ? updatedBook : book))
+    );
+    setIsEditBookOpen(false); 
+  };
 
   return (
     <div className="book-container">
       {/* Header */}
       <div className="book-header">
         <div className="book-title">
-          <i className="fa-solid fa-arrow-left back"></i>
+          <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i>
           <h1>Menu</h1>
         </div>
         <div className="book-two-icon">
           <div className="bell">
-            <i className="fa-solid fa-bell note-bell" onClick={() => navigate("/notification")}></i>
+            <i className="fa-solid fa-bell note-bell" onClick={() => navigate("/notification")}  style={{color: "#00163B"}} ></i>
           </div>
           <div className="profile">
             <img src="https://placehold.co/40x40" alt="User profile" className="profile-img" onClick={() => navigate("/Profile")} />
@@ -86,33 +80,42 @@ const Books = () => {
       <div className="sub-header">
         <span className="text">Categories</span>
         <div className="btn">
-          <button className="category" onClick={handleMenuToggle}>Add Books</button>
+          <button className="category" onClick={handleRightMenuToggle}>Add Books</button>
         </div>
       </div>
 
       {/* Right Side Menu */}
-      {isMenuOpen && <RightSideMenu isOpen={isMenuOpen} onClose={handleMenuToggle} />}
+      {isRightMenuOpen && <RightSideMenu isOpen={isRightMenuOpen} onClose={() => setIsRightMenuOpen(false)} />}
+      {isEditBookOpen && <EditBook isOpen={isEditBookOpen} onClose={() => setIsEditBookOpen(false)} book={selectedBook} onUpdate={handleUpdateBook} />} 
 
       {/* Categories */}
       <div className="categories-container">
-        {categories.map((category) => (
+        {[
+          { category: 'All', title: "All", count: "200k Books" },
+          { category: 'cbseEnglishMedium', title: "CBSE English Medium", count: "50k Books" },
+          { category: 'cbseEnglishMediumWorkbook', title: "CBSE English Medium Workbook", count: "30k Books" },
+          { category: 'cbseHindiMedium', title: "CBSE Hindi Medium", count: "40k Books" },
+          { category: 'cbseHindiMediumWorkbook', title: "CBSE Hindi Medium Workbook", count: "25k Books" },
+          { category: 'gsebEnglishMedium', title: "GSEB English Medium", count: "40k Books" },
+          { category: 'gsebEnglishMediumWorkbook', title: "GSEB English Medium Workbook", count: "40k Books" },
+          { category: 'gsebGujaratiMedium', title: "GSEB Gujarati Medium", count: "40k Books" },
+          { category: 'icseEnglishMedium', title: "ICSE English Medium", count: "40k Books" },
+          { category: 'icseEnglishMediumWorkbook', title: "ICSE English Medium Workbook", count: "40k Books" },
+        ].map((category) => (
           <div
             key={category.category}
             className={`category-card ${activeCategory === category.category ? "active" : ""}`}
             onClick={() => handleCardClick(category.category)}
           >
-            <div className="icon-container">
-              <i className={`${category.icon} c-icon`}></i>
-            </div>
             <div className="category-title">{category.title}</div>
             <div className="category-count">{category.count}</div>
           </div>
         ))}
       </div>
 
-      {/* Books Table (Always Visible) */}
+      {/* Books Table */}
       <div className="special-menu-container">
-        <h1 className="title">Books in {categories.find((c) => c.category === activeCategory)?.title || "All Categories"}</h1>
+        <h1 className="title">Books in {activeCategory || "All Categories"}</h1>
         <table className="book-table">
           <thead>
             <tr>
@@ -142,7 +145,7 @@ const Books = () => {
                 <td>Rs. {book.price}</td>
                 <td className="availability">{book.status === 'active' ? 'In Stock' : 'Out of Stock'}</td>
                 <td className="actions">
-                  <i className="fa-solid fa-pencil edit" onClick={handleMenuToggle}></i>
+                  <i className="fa-solid fa-pencil edit" onClick={() => handleEditBookToggle(book)}></i>
                   <i className="fa-solid fa-trash delete"></i>
                 </td>
               </tr>

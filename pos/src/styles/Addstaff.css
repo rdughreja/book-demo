@@ -4,23 +4,24 @@
     gap: 15px;
   }
 
-  .divider2 {
+  .divider3 {
     height: 1px;
-    background-color: #b2a3a3;
-    border: none;
+    background-color: #00163B;
+    border: 0.5px solid #00163B;
     margin: 10px 0;
   }
   
   .staff-form label {
     font-size: 14px;
     font-weight: bold;
+    color: #00163B;
   }
   
   .staff-form input {
     width: 100%;
     padding: 8px;
-    border: 1px solid #605F5F;
-    background-color: #605F5F ;
+    border: 1px solid #D2F7FF;
+    background-color: #D2F7FF ;
     border-radius: 4px;
     font-size: 14px;
   }
@@ -60,3 +61,14 @@
     background-color: #4774a3;
   }
   
+  .form-row3 {
+    display: flex;
+    gap: 30px; /* Space between age and salary input */
+  }
+  
+  .input-group {
+    flex: 1; /* Ensures equal width for both inputs */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }

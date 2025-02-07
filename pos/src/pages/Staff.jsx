@@ -49,26 +49,19 @@ const Staff = () => {
     setStaffData(updatedStaff);
   };
 
-  const updateAttendanceStatus = (id, newStatus) => {
-    setAttendanceData((prevData) =>
-      prevData.map((record) =>
-        record.id === id ? { ...record, status: newStatus } : record
-      )
-    );
-  };
-
+ 
   return (
     <div className="staff-container">
       {/* Header */}
       <div className="staff-header">
         <div className="staff-title">
-          <i className="fa-solid fa-arrow-left back" style={{ fontSize: '13px' }}></i>
+          <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i>
           <h1>Staff Management</h1>
         </div>
 
         <div className="staff-two-icon">
           <div className="bell">
-            <i className="fa-solid fa-bell note-bell" onClick={handleNotificationClick}></i>
+            <i className="fa-solid fa-bell note-bell" onClick={handleNotificationClick} style={{color: "#00163B"}}></i>
           </div>
           <div className="profile">
             <img src="https://placehold.co/40x40" alt="User profile" className="profile-img"  onClick={handleProfileClick} />
@@ -94,12 +87,8 @@ const Staff = () => {
         <div className="tabs-row">
           <button
             className={activeTab === 'staff' ? 'active-tab' : ''}
-            onClick={() => handleToggle('staff')}
+            onClick={() => handleToggle('staff')} style={{backgroundColor:"#D2F7FF"}}
           >Staff Management</button>
-          <button
-            className={activeTab === 'attendance' ? 'active-tab' : ''}
-            onClick={() => handleToggle('attendance')}
-          >Attendance</button>
         </div>
 
         {activeTab === 'staff' && (
@@ -127,8 +116,8 @@ const Staff = () => {
                   <td>{member.salary}</td>
                   <td>{member.timings}</td>
                   <td>
-                    <i className="fa-solid fa-eye view"></i> 
-                    <i className="fa-solid fa-pencil edit1" onClick={() => handleToggle('attendance')}></i>
+                    {/* <i className="fa-solid fa-eye view"></i>  */}
+                    {/* <i className="fa-solid fa-pencil edit1" onClick={() => handleToggle('attendance')}></i> */}
                     <i className="fa-solid fa-trash delete1" onClick={() => deleteStaff(member.id)}></i>
                   </td>
                 </tr>
@@ -137,45 +126,7 @@ const Staff = () => {
           </table>
         )}
 
-        {activeTab === 'attendance' && (
-          <table>
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Timings</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {attendanceData.map((record) => (
-                <tr key={record.id}>
-                  <td>{record.id}</td>
-                  <td>{record.name}</td>
-                  <td>{record.date}</td>
-                  <td>{record.timings}</td>
-                  <td>
-                    {record.status ? (
-                      <button className={`status ${record.status.toLowerCase()}`}>
-                        {record.status}
-                      </button>
-                    ) : (
-                      <>
-                        <button className="status present" onClick={() => updateAttendanceStatus(record.id, 'Present')}>
-                          Present
-                        </button>
-                        <button className="status absent" onClick={() => updateAttendanceStatus(record.id, 'Absent')}>
-                          Absent
-                        </button>
-                      </>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
+       
       </div> 
     </div> /*staff-container*/
   );

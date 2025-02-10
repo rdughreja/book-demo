@@ -1,0 +1,192 @@
+.edit-staff-menu {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 1079px;
+    height: auto;
+    background-color: white;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+    color: #00163B;
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .edit-staff-menu.open {
+    right: 0;
+    overflow-y: auto;
+    height: 550px;
+  }
+  
+  .menu-header2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .icon6 {
+    background-color: #D2F7FF;
+    border-radius: 50%;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: #333232;
+    margin: 10px 0;
+  }
+  
+  .category-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #00163B;
+  }
+  
+  input, select {
+    width: 95%;
+    padding: 8px;
+    border: 1px solid #D2F7FF;
+    background-color: #D2F7FF;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #00163B;
+  }
+  
+  .price-stock-row {
+    display: flex;
+    gap: 32px;
+  }
+  
+  .price-stock-group {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  
+  .btn2 {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+  }
+  
+  .cancel-button,
+  .submit-button {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+  }
+  
+  .cancel-button {
+    background-color: transparent;
+    color: #00163B;
+  }
+  
+  .submit-button {
+    background-color: #777979;
+    color: white;
+  }
+  
+  .cancel-button:hover {
+    background-color: #777;
+  }
+  
+  .submit-button:hover {
+    background-color: #0056b3;
+  }
+  
+  
+  select {
+    width: 95%;
+    padding: 8px;
+    border: 1px solid rgb(96, 95, 95);
+    background-color: #D2F7FF;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #777979;
+  }
+  
+  select:focus {
+    outline: none;
+    border-color: #007bff;
+  }
+  
+  .image-upload-box {
+    width: 100%;
+    height: 150px;
+    border: 2px dashed #aaa;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .upload-area {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
+  .upload-area span {
+    background-color: #7696b9;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+  }
+  
+  .upload-area p {
+    font-size: 12px;
+    color: rgb(200, 200, 200);
+  }
+  
+  .preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .form-row3 {
+    display: flex;
+    gap: 30px; /* Adds space between the fields */
+  }
+  
+  .input-group {
+    flex: 1; /* Makes each input box take equal width */
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

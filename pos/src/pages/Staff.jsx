@@ -1,36 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import '../styles/Staff.css'
+import '../styles/Staff.css';
 import Addstaff from '../componets/Addstaff';
 import Editstaff from '../componets/Editstaff';
 
 const Staff = () => {
-
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isAddStaffOpen, setIsAddStaffOpen] = useState(false);
+  const [isEditStaffOpen, setIsEditStaffOpen] = useState(false);
+  const [selectedStaff, setSelectedStaff] = useState(null);
   const [activeTab, setActiveTab] = useState('staff');
-
-  const handleToggle = (tab) => {
-    setActiveTab(tab);
-  };
-
- 
-  const handleMenuToggle = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
-
-  const navigate = useNavigate(); 
-
-  const handleProfileClick = () => {
-    navigate('/Profile');  
-  };
-
-  const handleNotificationClick = () => {
-    navigate('/notification');  
-  };  
-
   const [staffData, setStaffData] = useState([]);
   const [attendanceData, setAttendanceData] = useState([]);
+
+  const navigate = useNavigate(); 
 
   useEffect(() => {
     // Fetch staff data from the API
@@ -46,24 +29,6 @@ const Staff = () => {
     fetchStaffData();
   }, []);
 
-
-  // const editStaff = async (id, updatedData) => {
-  //   try {
-  //     const response = await axios.put(`http://localhost:5000/employees/update/${id}`, updatedData);
-      
-  //     // Update local state with the modified staff member
-  //     setStaffData(staffData.map((member) => 
-  //       member.id === id ? { ...member, ...updatedData } : member
-  //     ));
-  
-  //     alert('Staff member updated successfully!');
-  //   } catch (error) {
-  //     console.error('Error updating staff member:', error);
-  //     alert('Failed to update staff member. Please try again.');
-  //   }
-  // };
-  
-
   const deleteStaff = async (id) => {
     try {
       await axios.delete(`http://localhost:5000/employees/delete`, { data: { id } });
@@ -75,13 +40,16 @@ const Staff = () => {
     }
   };
 
-  const updateAttendanceStatus = (id, newStatus) => {
-    setAttendanceData((prevData) =>
-      prevData.map((record) =>
-        record.id === id ? { ...record, status: newStatus } : record
-      )
-    );
+  // Handlers for toggling AddStaff and EditStaff modals
+  const toggleAddStaff = () => {
+    setIsAddStaffOpen(!isAddStaffOpen);
   };
+
+  const toggleEditStaff = (staff = null) => {
+    setSelectedStaff(staff);
+    setIsEditStaffOpen(!isEditStaffOpen);
+  };
+
 
   return (
     <div className="staff-container">
@@ -94,10 +62,10 @@ const Staff = () => {
 
         <div className="staff-two-icon">
           <div className="bell">
-            <i className="fa-solid fa-bell note-bell" onClick={handleNotificationClick}></i>
+            <i className="fa-solid fa-bell note-bell" onClick={() => navigate('/notification')}></i>
           </div>
           <div className="profile">
-            <img src="https://placehold.co/40x40" alt="User profile" className="profile-img"  onClick={handleProfileClick} />
+            <img src="https://placehold.co/40x40" alt="User profile" className="profile-img" onClick={() => navigate('/Profile')} />
           </div>
         </div>
       </div>
@@ -109,22 +77,22 @@ const Staff = () => {
             <h2>{activeTab === 'staff' ? `Staff (${staffData.length})` : `Attendance (${attendanceData.length})`}</h2>
           </div>
           <div className="action-btn">
-            <button className="add-staff"  onClick={handleMenuToggle}>Add Staff</button>
-            {/* <button className="sort-by">Sort by</button> */}
+            <button className="add-staff" onClick={toggleAddStaff}>Add Staff</button>
           </div>
         </div>
-             
-        {isMenuOpen && <Addstaff isOpen={isMenuOpen} onClose={handleMenuToggle} />}
+
+        {isAddStaffOpen && <Addstaff isOpen={isAddStaffOpen} onClose={toggleAddStaff} />}
+        {isEditStaffOpen && <Editstaff isOpen={isEditStaffOpen} staff={selectedStaff} onClose={toggleEditStaff} />}
 
         {/* Tabs Row */}
         <div className="tabs-row">
           <button
             className={activeTab === 'staff' ? 'active-tab' : ''}
-            onClick={() => handleToggle('staff')}
+            onClick={() => setActiveTab('staff')}
           >Staff Management</button>
           <button
             className={activeTab === 'attendance' ? 'active-tab' : ''}
-            onClick={() => handleToggle('attendance')}
+            onClick={() => setActiveTab('attendance')}
           >Attendance</button>
         </div>
 
@@ -155,7 +123,7 @@ const Staff = () => {
                   <td>{member.position}</td>
                   <td>{member.timings}</td>
                   <td>
-                    <i className="fa-solid fa-pencil edit1"  onClick={() => handleEditClick(member.id)}></i>
+                    <i className="fa-solid fa-pencil edit1" onClick={() => toggleEditStaff(member)}></i>
                     <i className="fa-solid fa-trash delete1" onClick={() => deleteStaff(member.id)}></i>
                   </td>
                 </tr>
@@ -163,9 +131,8 @@ const Staff = () => {
             </tbody>
           </table>
         )}
-
       </div> 
-    </div> /*staff-container*/
+    </div>
   );
 };
 

@@ -1,96 +1,99 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import "../styles/Editstaff.css";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import '../styles/Editstaff.css';
 
-const Editstaff = ({ isOpen, onClose, book, onUpdate }) => {
-  const [updatedBook, setUpdatedBook] = useState(book);
+const Editstaff = ({ isOpen, onClose, staff }) => {
+  const [updatedStaff, setUpdatedStaff] = useState({
+    id: "",
+    name: "",
+    email: "",
+    phone: "",
+    age: "",
+    salary: "",
+    position: "",
+    timings: "",
+  });
 
+  // Populate form fields with selected staff data when modal opens
   useEffect(() => {
-    setUpdatedBook(book); // Update form state when book changes
-  }, [book]);
+    if (staff) {
+      setUpdatedStaff(staff);
+    }
+  }, [staff]);
 
   const handleChange = (e) => {
-    setUpdatedBook({ ...updatedBook, [e.target.name]: e.target.value });
+    setUpdatedStaff({ ...updatedStaff, [e.target.name]: e.target.value });
   };
 
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setUpdatedBook({ ...updatedBook, image: URL.createObjectURL(file) });
-    }
-  };
-
-  const handleSubmit = async (e) => {  // Add "async" here
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    
     try {
-      const response = await axios.put('http://localhost:5000/allBooks/update', {}); // Add request body if required
-      console.log("New Staff Added:", response.data);
-      alert("Staff member added successfully!");
-      onClose(); // Close the form after successful submission
-    } catch (error) {
-      console.error('Error adding staff member:', error);
-      alert('Failed to add staff member. Please try again.');
-    }
-};
+      // Ensure the ID is present and make API request
+      if (!updatedStaff.id) {
+        alert("Error: Staff ID is missing.");
+        return;
+      }
 
+      const response = await axios.put(
+        `http://localhost:5000/employees/update/${updatedStaff.id}`,updatedStaff
+      );
+
+      console.log("Staff Updated:", response.data);
+      alert("Staff member updated successfully!");
+      onClose(); // Close the form after a successful update
+    } catch (error) {
+      console.error('Error updating staff member:', error);
+      alert('Failed to update staff member. Please try again.');
+    }
+  };
+
+  if (!isOpen) return null;
 
   return (
-    <div className={`edit-book-menu ${isOpen ? "open" : ""}`}>
+    <div className={`edit-staff-menu ${isOpen ? "open" : ""}`}>
       <div className="menu-header2">
-        <h3>Edit Book</h3>
-        <i className="fa-solid fa-arrow-left icon6" style={{ fontSize: "11px", color: "#00163B" }} onClick={onClose}></i>
+        <h3>Edit Staff</h3>
+        <i className="fa-solid fa-arrow-left icon6" 
+           style={{ fontSize: "11px", color: "#00163B" }} 
+           onClick={onClose}>
+        </i>
       </div>
-      <hr className="divider" />
-      <form className="category-form" onSubmit={handleSubmit}>
-        {/* Image Upload Section */}
-        <label>Book Image:</label>
-        <div className="image-upload-box">
-          {updatedBook.image ? (
-            <img src={updatedBook.image} alt="Book Preview" className="preview-image" />
-          ) : (
-            <label className="upload-area">
-              <input type="file" accept="image/*" onChange={handleImageUpload} hidden />
-              <span>Add File</span>
-              <p>Or drag and drop files</p>
-            </label>
-          )}
-        </div>
+      <hr className="divider3" />
 
-        <label>Book Name:</label>
-        <input type="text" name="name" value={updatedBook.name} onChange={handleChange} required />
+      <form className="staff-form" onSubmit={handleSubmit}>
+        <label>ID:</label>
+        <input type="text" name="id" value={updatedStaff.id} disabled />
 
-        <div className="price-stock-row">
-          <div className="price-stock-group">
-            <label>Price:</label>
-            <input type="number" name="price" value={updatedBook.price} onChange={handleChange} required />
+        <label>Name:</label>
+        <input type="text" name="name" value={updatedStaff.name} onChange={handleChange} required />
+
+        <label>Email:</label>
+        <input type="email" name="email" value={updatedStaff.email} onChange={handleChange} required />
+
+        <label>Phone:</label>
+        <input type="tel" name="phone" value={updatedStaff.phone} onChange={handleChange} required />
+
+        <div className="form-row3">
+          <div className="input-group">
+            <label>Age:</label>
+            <input type="text" name="age" value={updatedStaff.age} onChange={handleChange} required />
           </div>
 
-          <div className="price-stock-group">
-            <label>Stock Quantity:</label>
-            <input
-              type="number"
-              name="stock_quantity"
-              value={updatedBook.stock_quantity}
-              onChange={handleChange}
-              required
-            />
+          <div className="input-group">
+            <label>Salary:</label>
+            <input type="number" name="salary" value={updatedStaff.salary} onChange={handleChange} required />
           </div>
         </div>
 
-        {/* Availability Column */}
-        <label>Availability:</label>
-        <select name="availability" value={updatedBook.availability} onChange={handleChange} required>
-          <option value="In Stock">In Stock</option>
-          <option value="Out of Stock">Out of Stock</option>
-        </select>
+        <label>Position:</label>
+        <input type="text" name="position" value={updatedStaff.position} onChange={handleChange} required />
 
-        <label>Category:</label>
-        <input type="text" name="category" value={updatedBook.category} onChange={handleChange} required />
+        <label>Timings:</label>
+        <input type="text" name="timings" value={updatedStaff.timings} onChange={handleChange} required />
 
         <div className="btn2">
-          <button type="button" className="cancel-button" onClick={onClose}>
-            Cancel
-          </button>
+          <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
           <button type="submit" className="submit-button">Save</button>
         </div>
       </form>

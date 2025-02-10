@@ -1,3 +1,42 @@
+.add-staff-menu {
+  position: fixed;
+  top: 0;
+  right: -400px;
+  width: 400px;
+  height: auto;
+  background-color: white;
+  box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+  color: white;
+  transition: right 0.3s ease-in-out;
+  z-index: 1000;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-staff-menu.open {
+  right: 0;
+  overflow-y: auto;
+  height: 550px;
+}
+
+.menu-header2 {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  color: #00163B;
+}
+
+.icon6 {
+  background-color: #494a4b;
+  border-radius: 50%;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
 .staff-form {
     display: flex;
     flex-direction: column;

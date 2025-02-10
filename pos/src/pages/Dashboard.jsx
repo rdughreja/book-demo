@@ -47,6 +47,9 @@ const Dashboard = () => {
               </div>
          
                <div className="two-icon">
+                  <div className="pos-btn">
+                     <button className='posbtn'>POS</button>
+                  </div>
                   <div className="bell">
                       <i className="fa-solid fa-bell note-bell" style={{color: "#00163B"}}  onClick={handleNotificationClick}></i>
                   </div>

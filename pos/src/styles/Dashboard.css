@@ -47,7 +47,16 @@ justify-content: center;
   width: auto;
   height: 100%;
   margin-right: 9px;
-  margin-left: 800px;
+  margin-left: 700px;
+}
+
+.posbtn{
+    background-color: #D2F7FF;
+    color: #00163B;
+    box-shadow: none;
+    margin-right: 10px;
+    font-weight: bold;
+    border: 1px solid #00163B;
 }
 
 .note-bell{

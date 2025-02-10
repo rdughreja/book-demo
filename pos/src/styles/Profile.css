@@ -96,7 +96,7 @@ h1 {
     
     /* Profile Card */
     .profile-card {
-      background-color: #2d3748;
+      background-color: #D2F7FF;
       border-radius: 10px;
       margin-top: 100px;
       padding: 2rem;
@@ -122,7 +122,7 @@ h1 {
       display: flex;
       flex-direction: column;
       gap: 0 rem;
-      color: aliceblue;
+      color: #00163B;
     }
     
     .profile-name {
@@ -150,17 +150,17 @@ h1 {
     
     .form-group label {
       font-size: 14px;
-      color: #a0aec0;
+      color: #00163B;
       margin-bottom: 0.5rem;
     }
     
     .form-group input {
       width: 450px;
       padding: 0.70rem;
-      background-color: #4a5568;
+      background-color: white;
       border: none;
       border-radius: 5px;
-      color: white;
+      color: gray;
       font-size: 14px;
     }
     
@@ -174,12 +174,12 @@ h1 {
     
     .password-group i {
       position: absolute;
-      right: -210px;
+      right: 10px; /* Adjusted to keep it inside the input box */
       top: 50%;
       transform: translateY(-50%);
       color: #a0aec0;
       cursor: pointer;
-    }
+    }    
     
     /* Actions */
     .profile-actions {

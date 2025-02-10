@@ -26,7 +26,7 @@ const Profile = () => {
 
       <div className="report-two-icon">
         <div className="bell">
-          <i className="fa-solid fa-bell note-bell"></i>
+          <i className="fa-solid fa-bell note-bell" style={{color: "#00163B"}}></i>
         </div>
         <div className="profile">
           <img src="https://placehold.co/40x40" alt="User profile" className='profile-img' />

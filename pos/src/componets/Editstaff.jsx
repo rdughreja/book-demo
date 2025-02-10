@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import '../styles/Editstaff.css';
 
-const Editstaff = ({ isOpen, onClose, staff }) => {
+const Editstaff = ({ isOpen, onClose, staff, onUpdate }) => {
   const [updatedStaff, setUpdatedStaff] = useState({
     id: "",
     name: "",
@@ -14,37 +14,46 @@ const Editstaff = ({ isOpen, onClose, staff }) => {
     timings: "",
   });
 
-  // Populate form fields with selected staff data when modal opens
+  // Ensure staff data is correctly populated when modal opens
   useEffect(() => {
+    console.log("Received Staff Data:", staff); // Debugging log
     if (staff) {
       setUpdatedStaff(staff);
     }
   }, [staff]);
 
   const handleChange = (e) => {
-    setUpdatedStaff({ ...updatedStaff, [e.target.name]: e.target.value });
+    setUpdatedStaff((prev) => ({
+      ...prev,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     try {
-      // Ensure the ID is present and make API request
       if (!updatedStaff.id) {
         alert("Error: Staff ID is missing.");
         return;
       }
 
+      console.log("Sending Data:", updatedStaff); // Debugging log
+
+      // Send PUT request to update staff details
       const response = await axios.put(
-        `http://localhost:5000/employees/update/${updatedStaff.id}`,updatedStaff
+        `http://localhost:5000/employees/update/${updatedStaff.id}`,
+        updatedStaff
       );
 
-      console.log("Staff Updated:", response.data);
+      console.log("API Response:", response.data); // Debugging log
       alert("Staff member updated successfully!");
-      onClose(); // Close the form after a successful update
+      
+      onUpdate(response.data); // Update parent component
+      onClose(); // Close the modal
     } catch (error) {
-      console.error('Error updating staff member:', error);
-      alert('Failed to update staff member. Please try again.');
+      console.error("API Error:", error.response?.data || error.message);
+      alert("Failed to update staff member. Check the console for details.");
     }
   };
 
@@ -54,8 +63,8 @@ const Editstaff = ({ isOpen, onClose, staff }) => {
     <div className={`edit-staff-menu ${isOpen ? "open" : ""}`}>
       <div className="menu-header2">
         <h3>Edit Staff</h3>
-        <i className="fa-solid fa-arrow-left icon6" 
-           style={{ fontSize: "11px", color: "#00163B" }} 
+        <i className="fa-solid fa-arrow-left icon6"
+           style={{ fontSize: "11px", color: "#00163B" }}
            onClick={onClose}>
         </i>
       </div>

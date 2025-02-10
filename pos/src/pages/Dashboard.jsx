@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css'
-import { useState } from 'react';
+
 
 const Dashboard = () => {
 
@@ -37,6 +37,10 @@ const Dashboard = () => {
     const handleNotificationClick = () => {
       navigate('/notification');  
     };
+
+    const handlePOSClick = () => {
+      navigate('/posbook');  
+    };
    
  return (
      <div className="dashboard-container">
@@ -48,7 +52,7 @@ const Dashboard = () => {
          
                <div className="two-icon">
                   <div className="pos-btn">
-                     <button className='posbtn'>POS</button>
+                      <button className='posbtn' onClick={handlePOSClick}>POS</button>
                   </div>
                   <div className="bell">
                       <i className="fa-solid fa-bell note-bell" style={{color: "#00163B"}}  onClick={handleNotificationClick}></i>

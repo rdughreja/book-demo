@@ -1,0 +1,185 @@
+ .find-books-container{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    width: 1060px;
+    height: full;
+}
+
+.title{
+    color: #133e87;
+    text-align: center;
+    font-weight: 400;
+    font-size: x-large;
+    padding-bottom: 30px;
+    
+}
+
+/* Container Styling */
+ .find-books-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 20px;
+    padding: 20px;
+    padding-top: 0px;
+    background-color: white;/* Light yellow background */
+    height: 120vh;
+  } 
+
+  
+  /* Steps Styling */
+  .steps-container {
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    margin-bottom: 20px;
+    font-weight: 600;
+    align-items: center;
+  }
+  
+  .step {
+    text-align: center;
+  }
+  
+  .step-number {
+    display: inline-block;
+    width: 60px;
+    height: 60px;
+    line-height: 40px;
+    border: 2px solid transparent;
+    border-radius: 50%;
+    font-weight: bold;
+    font-size: 20px;
+    color: #608BC1;
+    align-content: center;
+  }
+  
+   .step.active .step-number {
+    background-color: white; /* Highlighted step */
+    color: #133e87;
+    border: 2px solid #133e87;
+   }
+
+  .step p {
+    margin-top: 8px;
+    color: #133e87;
+  }
+   
+  .lines{
+       background-color: #608BC1;
+       opacity: 40%;
+       height: 2px;
+       width: 70rem;
+       display: flex;
+       justify-content: flex-start;
+       align-items: start;
+       margin-top: -40px;
+       margin-left: 12px;
+       margin-right: 12px;
+       transition: background-color 0.3s ease, opacity 0.3s ease; 
+  }
+
+  .lines.active {
+    background-color: #1D3557; /* Dark color */
+    opacity: 100%; /* Full opacity for darker color */
+}
+
+  .check{
+      display: inline-block;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      align-content: center;
+      background-color: #608BC1;
+  }
+
+  .checkmark{
+    height: 20px;
+    width: 20px;
+  }
+
+
+  /* Options Styling */
+    .options-container {
+    display: flex;
+    border: 1px solid #608BC1;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    gap:5px;
+    width: 100%;
+    height: 100%;
+    margin-top: 0%;
+    padding: 25px 0 5px 0;
+  }
+  
+  .option-button {
+    /* flex: 1 1 calc(20% - 20px); */
+    padding: 12px 20px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    width: 50%;
+    height: 20%;
+    box-shadow: 0px 3px 2px #133e87;
+    border: 1px solid gray;
+    background-color: #ffffff;
+    color: #133e87;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+    transition: all 0.3s ease;
+  }
+  
+  .option-button:hover {
+    background-color: #608BC1;
+    color: white;
+    transform: translateY(-2px);
+  }  
+
+  .grid-container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 columns */
+    gap: 10px; /* Space between grid items */
+    width: fit-content; /* Ensures it doesn't stretch full width */
+    justify-content: center; /* Center grid items inside */
+    align-items: center; /* Align items in the middle */
+    margin: 0 auto; /* Center the grid itself */
+}
+
+/* Ensure grid items are the same size and centered */
+.grid-item {
+    width: 170px; /* Set fixed width */
+    height: 60px; /* Set fixed height */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    border: 1px solid gray;
+    box-shadow: 0px 3px 2px #133e87;
+    font-weight: 500;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.grid-item:hover {
+    background-color: #608BC1;
+    color: white;
+    transform: translateY(-2px);
+}
+
+  
+
+ 
+  
+  
+
+
+
+
+
+ 

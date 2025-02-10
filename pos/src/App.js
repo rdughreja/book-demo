@@ -10,6 +10,8 @@ import Staff from './pages/Staff';
 import Reports from './pages/Reports';
 import Profile from './componets/Profile';
 import Notification from './componets/Notification';
+import POSbook from './pages/POSbook';
+import SubjectsPage from './pages/Subjectpage';
 
 const App = () => {
   return (
@@ -24,6 +26,8 @@ const App = () => {
                  <Route path="/reports" element={<Reports />} />
                  <Route path="/profile" element={<Profile />} />
                  <Route path="/notification" element={<Notification />} />
+                 <Route path="/posbook" element={<POSbook />} />
+                 <Route path="/subjects/:standard" element={<SubjectsPage />} />
               </Route>
             </Routes>
     </Router>

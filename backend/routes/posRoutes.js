@@ -2,6 +2,10 @@ const express = require('express');
 const router = express.Router();
 const { 
     // createSale,
+    getBoards,
+    getStandards,
+    getBooks,
+    getMediums,
     addToCart,
     removeFromCart,
     updateCartItem,
@@ -18,6 +22,10 @@ const {
     getTopSellingProducts
 } = require('../controllers/posControllers');
 
+router.get('/boards', getBoards);
+router.get('/mediums/:board', getMediums);
+router.get('/standards/:board/:medium', getStandards);
+router.get('/books/:board/:medium/:standard', getBooks);
 // Define routes with proper callbacks
 router.post('/:dbName/:collectionName/cart/add', addToCart);
 router.delete('/cart/remove', removeFromCart);

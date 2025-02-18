@@ -1,27 +1,11 @@
 const client = require('../config/database');
 const { ObjectId } = require('mongodb');
 
-// Utility function to check database and collection validity
-const isValidDatabaseAndCollection = (dbName, collectionName) => {
-  const allowedDatabases = [
-    'Adhesives_and_Tapes', 'Art_and_Craft_Supplies', 'Desk_Accessories',
-    'Educational_Supplies', 'Filing_and_Storage', 'Office_Supplies',
-    'Paper_Products', 'Presentation_and_Display', 'Technology_Accessories',
-    'Writing_Instruments', 'sample_mflix', 'cbseEnglishMedium', 'cbseEnglishMediumWorkbook', 'cbseHindiMedium', 'cbseHindiMediumWorkbook', 'gsebEnglishMedium', 'gsebEnglishMediumWorkbook', 'gsebGujaratiMedium', 'gsebGujaratiMediumWorkbook', 'icseEnglishMedium', 'icseEnglishMediumWorkbook'
+const allowedDatabases = [
+    'cbseEnglishMedium', 'cbseEnglishMediumWorkbook', 'cbseHindiMedium', 'cbseHindiMediumWorkbook', 'gsebEnglishMedium', 'gsebEnglishMediumWorkbook', 'gsebGujaratiMedium', 'gsebGujaratiMediumWorkbook', 'icseEnglishMedium', 'icseEnglishMediumWorkbook'
   ];
 
   const allowedCollections = {
-    'Adhesives_and_Tapes': ['GlueSticks', 'DoubleSidedTape', 'HotGlueGun', 'MaskingTape', 'SuperGlue'],
-    'Art_and_Craft_Supplies': ['CanvasBoards', 'CraftScissors', 'Crayons', 'PaintBrushes', 'WatercolorPaints'],
-    'Desk_Accessories': ['DeskCalendars', 'DeskOrganizers', 'MousePads', 'Paperweights', 'PenHolders'],
-    'Educational_Supplies': ['BasicCalculators', 'Flashcards', 'GeometryBoxes', 'LearningCharts', 'Protractors'],
-    'Filing_and_Storage': ['LeverArchFiles', 'ArchiveBoxes', 'ExpandingDocumentOrganizers', 'MagazineHolders', 'ZipperedDocumentPouches'],
-    'Office_Supplies': ['BinderClips', 'FileFolders', 'PaperClips', 'Scissors', 'Staplers'],
-    'Paper_Products': ['A4Sheets', 'Envelopes', 'RuledNotebooks', 'Sketchbooks', 'StickyNotes'],
-    'Presentation_and_Display': ['Whiteboards', 'BulletinBoards', 'EaselStands', 'FlipCharts', 'ProjectorScreens'],
-    'Technology_Accessories': ['CableTies', 'LaptopStands', 'StylusPens', 'USBDrives', 'WirelessChargers'],
-    'Writing_Instruments': ['GelPens', 'BallpointPens', 'Highlighters', 'MechanicalPencils', 'WhiteboardMarkers'],
-    'sample_mflix': ['comments', 'embedded_movies', 'movies', 'sessions', 'theaters', 'users'],
     'cbseEnglishMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
     'cbseHindiMedium': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
     'cbseHindiMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
@@ -33,8 +17,57 @@ const isValidDatabaseAndCollection = (dbName, collectionName) => {
     'icseEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
     'cbseEnglishMediumWorkbook': ['Grade-1', 'Grade-2', 'Grade-3', 'Grade-4', 'Grade-5', 'Grade-6', 'Grade-7', 'Grade-8', 'Grade-9', 'Grade-10', 'Grade-11', 'Grade-12'],
   };
+// Utility function to check database and collection validity
+const isValidDatabaseAndCollection = (dbName, collectionName) => {
+   return allowedDatabases.includes(dbName) && allowedCollections[dbName]?.includes(collectionName);
+};
 
-  return allowedDatabases.includes(dbName) && allowedCollections[dbName]?.includes(collectionName);
+// Fetch boards
+const getBoards = async (req, res) => {
+  try {
+    const boards = Object.keys(allowedCollections);
+    res.status(200).json(boards);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Fetch mediums based on board
+const getMediums = async (req, res) => {
+  const { board } = req.params;
+  try {
+    const mediums = allowedCollections[board] ? Object.keys(allowedCollections[board]) : [];
+    res.status(200).json(mediums);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Fetch standards based on board and medium
+const getStandards = async (req, res) => {
+  const { board, medium } = req.params;
+  try {
+    const standards = allowedCollections[`${board}${medium}`] || [];
+    res.status(200).json(standards);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+// Fetch books based on board, medium, and standard
+const getBooks = async (req, res) => {
+  const { board, medium, standard } = req.params;
+  try {
+    await client.connect();
+    const db = client.db(`${board}${medium}`);
+    const collection = db.collection(standard);
+    const books = await collection.find().toArray();
+    res.status(200).json(books);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  } finally {
+    await client.close();
+  }
 };
 
 // Cart Operations
@@ -122,7 +155,7 @@ const updateCartItem = async (req, res) => {
         res.status(500).json({ error: error.message });
     } finally {
         await client.close();
-    }
+    } 
 };
 
 const applyDiscount = async (req, res) => {
@@ -510,18 +543,22 @@ const getTopSellingProducts = async (req, res) => {
 };
 
 module.exports = {
-    createSale,
-    addToCart,
-    removeFromCart,
-    updateCartItem,
-    applyDiscount,
-    checkout,
-    getSales,
-    getSaleDetails,
-    processRefund,
-    updateInventory,
-    getInventoryStatus, 
-    getLowStockProducts,
-    getDailySalesReport,
-    getTopSellingProducts
+  getBoards,
+  getMediums,
+  getStandards,
+  getBooks,
+  createSale,
+  addToCart,
+  removeFromCart,
+  updateCartItem,
+  applyDiscount,
+  checkout,
+  getSales,
+  getSaleDetails,
+  processRefund,
+  updateInventory,
+  getInventoryStatus,
+  getLowStockProducts,
+  getDailySalesReport,
+  getTopSellingProducts
 };

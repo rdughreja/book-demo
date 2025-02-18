@@ -1,7 +1,11 @@
-const express = require('express');
+const express = require('express'); 
 const router = express.Router();
 const { 
     // createSale,
+    getBoards,
+    getStandards,
+    getBooks,
+    getMediums,
     addToCart,
     removeFromCart,
     updateCartItem,
@@ -18,6 +22,10 @@ const {
     getTopSellingProducts
 } = require('../controllers/posControllers');
 
+router.get('/boards', getBoards);
+router.get('/mediums/:board', getMediums);
+router.get('/standards/:board/:medium', getStandards);
+router.get('/books/:board/:medium/:standard', getBooks);
 // Define routes with proper callbacks
 router.post('/:dbName/:collectionName/cart/add', addToCart);
 router.delete('/cart/remove', removeFromCart);
@@ -32,6 +40,6 @@ router.get('/:dbName/:collectionName/inventory/status', getInventoryStatus);
 router.get('/:dbName/:collectionName/inventory/low-stock', getLowStockProducts);
 router.get('/reports/daily-sales', getDailySalesReport);
 // router.get('/reports/employee-sales', trackEmployeeSales);
-router.get('/reports/:dbName/:collectionName/top-selling', getTopSellingProducts); // Ensure this route is defined
+router.get('/reports/:dbName/:collectionName/top-selling', getTopSellingProducts);// Ensure this route is defined
 
 module.exports = router;

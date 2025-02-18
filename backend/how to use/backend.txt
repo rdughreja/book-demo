@@ -1,0 +1,169 @@
+Sure, here is the documentation for the Thunder Client requests in a text file format:
+
+### Thunder Client Requests Documentation
+
+#### 1. Get Boards
+
+**Request:**
+```
+Method: GET
+URL: http://localhost:5000/pos/boards
+Headers: None
+```
+
+#### 2. Get Mediums Based on Board
+
+**Request:**
+```
+Method: GET
+URL: http://localhost:5000/pos/mediums/:board
+Headers: None
+Params:
+  - board: cbseEnglishMedium
+```
+
+#### 3. Get Standards Based on Board and Medium
+
+**Request:**
+```
+Method: GET
+URL: http://localhost:5000/pos/standards/:board/:medium
+Headers: None
+Params:
+  - board: cbse
+  - medium: EnglishMedium
+```
+
+#### 4. Get Books Based on Board, Medium, and Standard
+
+**Request:**
+```
+Method: GET
+URL: http://localhost:5000/pos/books/:board/:medium/:standard
+Headers: None
+Params:
+  - board: cbse
+  - medium: EnglishMedium
+  - standard: Grade-1
+```
+
+### How to Use Thunder Client
+
+1. **Open Thunder Client** in your VS Code.
+2. **Create a new request** by clicking on the `New Request` button.
+3. **Copy and paste** the request details for each route into the Thunder Client request editor.
+4. **Replace the placeholders** (e.g., `:board`, `:medium`, `:standard`) with actual values as needed.
+5. **Send the request** and verify the response.
+
+### Example Thunder Client Request for Get Boards
+
+```
+Method: GET
+URL: http://localhost:5000/pos/boards
+Headers: None
+```
+
+### Example Thunder Client Request for Get Mediums Based on Board
+
+```
+Method: GET
+URL: http://localhost:5000/pos/mediums/cbseEnglishMedium
+Headers: None
+```
+
+### Example Thunder Client Request for Get Standards Based on Board and Medium
+
+```
+Method: GET
+URL: http://localhost:5000/pos/standards/cbse/EnglishMedium
+Headers: None
+```
+
+### Example Thunder Client Request for Get Books Based on Board, Medium, and Standard
+
+```
+Method: GET
+URL: http://localhost:5000/pos/books/cbse/EnglishMedium/Grade-1
+Headers: None
+```
+
+### Save as Text File
+
+You can save the above documentation as a text file named `thunderclient-requests.txt`.
+
+#### File: `thunderclient-requests.txt`
+
+```plaintext
+### Thunder Client Requests Documentation
+
+#### 1. Get Boards
+
+**Request:**
+Method: GET
+URL: http://localhost:5000/pos/boards
+Headers: None
+
+#### 2. Get Mediums Based on Board
+
+**Request:**
+Method: GET
+URL: http://localhost:5000/pos/mediums/:board
+Headers: None
+Params:
+  - board: cbseEnglishMedium
+
+#### 3. Get Standards Based on Board and Medium
+
+**Request:**
+Method: GET
+URL: http://localhost:5000/pos/standards/:board/:medium
+Headers: None
+Params:
+  - board: cbse
+  - medium: EnglishMedium
+
+#### 4. Get Books Based on Board, Medium, and Standard
+
+**Request:**
+Method: GET
+URL: http://localhost:5000/pos/books/:board/:medium/:standard
+Headers: None
+Params:
+  - board: cbse
+  - medium: EnglishMedium
+  - standard: Grade-1
+
+### How to Use Thunder Client
+
+1. **Open Thunder Client** in your VS Code.
+2. **Create a new request** by clicking on the `New Request` button.
+3. **Copy and paste** the request details for each route into the Thunder Client request editor.
+4. **Replace the placeholders** (e.g., `:board`, `:medium`, `:standard`) with actual values as needed.
+5. **Send the request** and verify the response.
+
+### Example Thunder Client Request for Get Boards
+
+Method: GET
+URL: http://localhost:5000/pos/boards
+Headers: None
+
+### Example Thunder Client Request for Get Mediums Based on Board
+
+Method: GET
+URL: http://localhost:5000/pos/mediums/cbseEnglishMedium
+Headers: None
+
+### Example Thunder Client Request for Get Standards Based on Board and Medium
+
+Method: GET
+URL: http://localhost:5000/pos/standards/cbse/EnglishMedium
+Headers: None
+
+### Example Thunder Client Request for Get Books Based on Board, Medium, and Standard
+
+Method: GET
+URL: http://localhost:5000/pos/books/cbse/EnglishMedium/Grade-1
+Headers: None
+```
+
+You can copy the above content and save it as a text file named `thunderclient-requests.txt`. This file will serve as documentation for the Thunder Client requests for your backend routes.

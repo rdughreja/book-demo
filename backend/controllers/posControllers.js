@@ -155,7 +155,7 @@ const updateCartItem = async (req, res) => {
         res.status(500).json({ error: error.message });
     } finally {
         await client.close();
-    }
+    } 
 };
 
 const applyDiscount = async (req, res) => {

@@ -1,4 +1,4 @@
-const express = require('express');
+const express = require('express'); 
 const router = express.Router();
 const { 
     // createSale,
@@ -40,6 +40,6 @@ router.get('/:dbName/:collectionName/inventory/status', getInventoryStatus);
 router.get('/:dbName/:collectionName/inventory/low-stock', getLowStockProducts);
 router.get('/reports/daily-sales', getDailySalesReport);
 // router.get('/reports/employee-sales', trackEmployeeSales);
-router.get('/reports/:dbName/:collectionName/top-selling', getTopSellingProducts); // Ensure this route is defined
+router.get('/reports/:dbName/:collectionName/top-selling', getTopSellingProducts);// Ensure this route is defined
 
 module.exports = router;

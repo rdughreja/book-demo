@@ -24,7 +24,7 @@ router.delete('/cart/remove', removeFromCart);
 router.put('/cart/update', updateCartItem);
 router.post('/cart/discount', applyDiscount);
 router.post('/cart/checkout', checkout);
-router.get('/:dbName/:collectionName/sales', getSales);
+router.get('/getSales', getSales);
 router.get('/sales/:saleId', getSaleDetails);
 router.post('/sales/refund', processRefund);
 router.post('/:dbName/:collectionName/inventory/update', updateInventory);

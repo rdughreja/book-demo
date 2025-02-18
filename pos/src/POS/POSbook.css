@@ -4,17 +4,18 @@
     flex-direction: column;
     align-items: center;
     margin: 20px;
-    width: 1060px;
+    width: full;
     height: full;
 }
 
-.title{
+.title2{
     color: #133e87;
     text-align: center;
     font-weight: 400;
     font-size: x-large;
-    padding-bottom: 30px;
-    
+    padding-bottom: 10px;
+    height: 20px;
+    width: 100%;
 }
 
 /* Container Styling */
@@ -29,6 +30,28 @@
     height: 120vh;
   } 
 
+  .find-book-title{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 50px;
+      width: 100%;
+      margin-bottom: 20px;
+  }
+
+  .icon7 {
+    background-color: #6084c1;
+    color: white;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    padding: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
   
   /* Steps Styling */
   .steps-container {
@@ -172,7 +195,36 @@
     transform: translateY(-2px);
 }
 
-  
+.search-bar-container {
+  display: flex;
+  justify-content: center;
+  width: 700px;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: rgb(161, 158, 158);
+}
+
+.search-bar {
+  width: 90%;
+  max-width: 700px;
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  background-color: white;
+  color: #133e87;
+  border-top-left-radius: 10px;
+  outline: none;
+}
+
+.search-icon{
+  background-color: white;
+  width: 35px;
+  height: 39px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom-right-radius: 10px;
+}
 
  
   

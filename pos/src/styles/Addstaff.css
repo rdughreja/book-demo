@@ -83,17 +83,12 @@
   }
   
   .cancel-button {
-    background-color: #3d3d3d;
-    color: white;
+   color: #3d3d3d;
   }
   
   .submit-button {
     background-color: #6489b1;
     color: white;
-  }
-  
-  .cancel-button:hover {
-    background-color: #777;
   }
   
   .submit-button:hover {

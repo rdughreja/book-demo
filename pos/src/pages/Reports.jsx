@@ -203,7 +203,7 @@ const Reports = () => {
     <div className="report-container">
         <div className="report-header">
               <div className="report-title"> 
-                 <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i>
+                 {/* <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i> */}
                  <h1>Reports</h1>
               </div>
          

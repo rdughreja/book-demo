@@ -5,7 +5,7 @@
 }
 
 /* Header Section */
-h1 {
+.report-title h1 {
   color: #00163B;
   font-weight: 100;
   font-size: 23px;
@@ -88,20 +88,20 @@ h1 {
   padding-left: 0;
 }
 
-.tab {
+.tabs .tab {
   background-color: transparent;
   color: #00163B;
-  padding: 10px;
+  padding: 7px;
   width: 110px;
   border: none;
   border-radius: 5px;
   margin-top: 20px;
   margin-right: 10px;
   cursor: pointer;
-  font-size: 11px;
+  font-size: 13px;
 }
 
-.tab.active {
+.tabs .tab.active {
   background-color: #D2F7FF;
   color: #00163B;
 }
@@ -139,7 +139,8 @@ h1 {
 }
 
 .sales-table tbody tr:hover {
-  background-color: #4b5c6c;
+  background-color: #b4b6b7;
+  
 }
 
 .sales-heading {

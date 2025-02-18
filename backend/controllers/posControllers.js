@@ -74,8 +74,8 @@ const addToCart = async (req, res) => {
             total: product.price * quantity,
             created_at: new Date()
         };
-
-        const cartCollection = db.collection('Carts');
+        const cartDb = client.db('cart');
+        const cartCollection = cartDb.collection('Carts');
         await cartCollection.insertOne(cartItem);
 
         res.status(201).json({ message: 'Added to cart', cart: cartItem });
@@ -107,7 +107,7 @@ const updateCartItem = async (req, res) => {
     const { cartId, quantity } = req.body;
     try {
         await client.connect();
-        const db = client.db('Adhesives_and_Tapes');
+        const db = client.db('cart');
         const cartCollection = db.collection('Carts');
         
         const cart = await cartCollection.findOne({ _id: new ObjectId(cartId) });
@@ -129,7 +129,7 @@ const applyDiscount = async (req, res) => {
     const { cartId, discountPercent } = req.body;
     try {
         await client.connect();
-        const db = client.db('Adhesives_and_Tapes');
+        const db = client.db('cart');
         const cartCollection = db.collection('Carts');
         
         const cart = await cartCollection.findOne({ _id: new ObjectId(cartId) });
@@ -184,7 +184,7 @@ const checkout = async (req, res) => {
 
     try {
         await client.connect();
-        const db = client.db('Adhesives_and_Tapes');
+        const db = client.db('cart');
         const cartCollection = db.collection('Carts');
         const salesCollection = db.collection('Sales');
 
@@ -224,18 +224,22 @@ const checkout = async (req, res) => {
 };
 
 const getSales = async (req, res) => {
-    const { dbName, collectionName } = req.params;
-
-    if (!isValidDatabaseAndCollection(dbName, collectionName)) {
-        return res.status(404).send('Invalid database or collection.');
-    }
-
     try {
         await client.connect();
-        const db = client.db(dbName);
-        const sales = await db.collection(collectionName).find().toArray();
-        console.log('Fetched sales:', sales); // Debug log
-        res.status(200).json(sales);
+        let allSales = [];
+
+        for (const dbName of allowedDatabases) {
+            const db = client.db(cart);
+            const collections = db.Sales;
+
+            for (const collectionName of collections) {
+                const sales = await db.collection(collectionName).find().toArray();
+                allSales = allSales.concat(sales);
+            }
+        }
+
+        console.log('Fetched sales:', allSales); // Debug log
+        res.status(200).json(allSales);
     } catch (error) {
         console.error('Error fetching sales:', error);
         res.status(500).json({ error: error.message });

@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/Inventory.css';
+import AddInventory from '../componets/AddInventory';
 
 const Inventory = () => {
   const navigate = useNavigate(); 
+  const [isAddInventory, setIsAddInventory] = useState(false);
   const [showProductList, setShowProductList] = useState(false);
   const couponCode = "YOUR-BIRTHDAY-1234";
 
@@ -23,18 +25,26 @@ const Inventory = () => {
     navigator.clipboard.writeText(couponCode);
     alert("Coupon code copied!");
   };
+
+  const handleAddInventoryToggle = () => {
+    setIsAddInventory(true); 
+    // setIsEditBookOpen(false); 
+  };
+
   
   return (
     <div className="report-container">
       <div className="report-header">
         <div className="report-title">
-          <i className="fa-solid fa-arrow-left back" style={{ fontSize: "14px", color: '#133E87',backgroundColor:"#D2F7FF" }}></i>
+          {/* <i className="fa-solid fa-arrow-left back" style={{ fontSize: "14px", color: '#133E87',backgroundColor:"#D2F7FF" }}></i> */}
           <h1>Inventory</h1>
         </div>
 
+        {isAddInventory && <AddInventory isOpen={isAddInventory} onClose={() => setIsAddInventory(false)} />}
+
         <div className="report-two-icon">
           <div className="bell">
-            <i className="fa-solid fa-bell note-bell" onClick={handleNotificationClick}></i>
+            <i className="fa-solid fa-bell note-bell" style={{color:"#00163B"}} onClick={handleNotificationClick}></i>
           </div>
           <div className="profile">
             <img src="https://placehold.co/40x40" alt="User profile" className='profile-img' onClick={handleProfileClick} />
@@ -45,7 +55,7 @@ const Inventory = () => {
       <div className="sub-header">
         <span className="text2">150 total products</span>
         <div className="btn">
-          <button className="category2">Add New Inventory</button>
+          <button className="category2"  onClick={handleAddInventoryToggle}>Add New Inventory</button>
         </div>
       </div>
 

@@ -5,12 +5,14 @@ import { Link, NavLink, Outlet } from 'react-router-dom';
 const Sidebar = () => {
 
   const menuItems = [
-    {id:1, icon: "fa-solid fa-search", text: "Dashboard", link: "/"},
-    {id:2, icon: "fa-solid fa-search", text: "Books", link: "/books"},
-    {id:3, icon: "fa-solid fa-search", text: "Staff", link: "/staff"},
-    {id:4, icon: "fa-solid fa-search", text: "Inventory", link: "/inventory" },
-    {id:5, icon: "fa-solid fa-search", text: "Reports", link: "/reports"},
-    {id:6, icon: "fa-solid fa-search", text: "Order", link: "/order"},
+    {id:1, icon: "fa-solid fa-table", text: "Dashboard", link: "/"},
+    {id:2, icon: "fa-solid fa-book", text: "Books", link: "/books"},
+    {id:3, icon: "fa-solid fa-pen", text: "Stationary", link: "/stationary"},
+    {id:4, icon: "fa-solid fa-user", text: "Staff", link: "/staff"},
+    {id:5, icon: "fa-solid fa-clipboard", text: "Inventory", link: "/inventory" },
+    {id:6, icon: "fa-solid fa-truck-fast", text: "Order", link: "/order" },
+    {id:7, icon: "fa-solid fa-signal", text: "Reports", link: "/reports"},
+    {id:8, icon: "fa-solid fa-gift", text: "Coupons", link: "/Coupons"},
   ];
 
   return (

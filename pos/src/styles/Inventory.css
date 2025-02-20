@@ -144,7 +144,9 @@ h1 {
 .filter-title {
   font-size: 14px;
   margin-top: -10px;
+  text-align: start;
 }
+
 
 .filter-buttons {
   display: flex;

@@ -1,0 +1,288 @@
+.stationary-container{
+    padding: 26px;
+    font-family: sans-serif;
+    width: 84%;
+    height: 100%;
+  }
+  
+ .stationary-title h1{
+    color: #00163B;
+    font-weight: 100;
+    font-size: 23px;
+    padding-left: 10px;
+    padding-top: 2px;
+  }
+  
+  .back{
+    /* font-size: 1px; */
+    margin-bottom: 3px;
+    background-color:  #D9D9D9;
+    color: #608BC1;;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;       /* Make it circular */
+    padding: 7px;  
+    margin-top: 13px;
+    height: 17px;
+    width: 17px;          /*Add padding for spacing */
+    display: flex;            /* Use flexbox to center the icon */
+    align-items: center;      /* Vertically center the icon */
+    justify-content: center;  /* Horizontally center the icon */
+  }
+  
+  .stationary-header{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+    
+  }
+  
+  .stationary-title{
+    display: flex;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .stationary-two-icon{
+    display: flex;
+    width: auto;
+    height: 100%;
+    margin-right: 9px;
+    margin-left: 800px;
+  }
+  
+  .note-bell{
+    font-size: 13px;
+    margin-bottom: 3px;
+    color: rgb(255, 255, 255);
+    border-radius: 50%;       /* Make it circular */
+    padding: 4px;            /* Add padding for spacing */
+    display: flex;            /* Use flexbox to center the icon */
+    align-items: center;      /* Vertically center the icon */
+    justify-content: center;  /* Horizontally center the icon */
+    
+  }
+  
+  .bell , .profile{
+    width: 50%;
+    height: 20px;
+  }
+  
+  .bell{
+    border-right: 1px solid rgb(227, 223, 223);
+    padding-right: 10px;
+  }
+  
+  .profile{
+    padding-left: 15px;
+    margin-top: -4px;
+  }
+  
+  .profile-img{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+  }
+  
+  .sub-header{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 20px;
+  }
+  
+  .stationary-category{
+    background-color: #D2F7FF;
+    border-radius: 5px;
+    width: 140px;
+    color: black;
+    height: 40px;
+    box-shadow: none;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* .add-button {
+    background-color: #3D67F5;
+    color: black;
+    padding: 0 20px;
+    height: 40px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 88px;
+    margin-left: auto;
+    cursor: pointer;
+  } */
+  
+  .text{
+    font-size: 20px;
+    font-weight: lighter;
+    color: #00163B;
+  }
+  
+  .stationary-categories-container {
+    display: flex;
+     /* Ensure even spacing between all cards */
+    align-items: center; /* Vertically center the cards */
+    padding-top: 15px;
+    overflow-y: hidden;
+    gap: 20px; /* Add consistent spacing between cards */
+    /* flex-wrap: wrap;  */
+    overflow-x: auto;/* Allow cards to wrap if necessary */
+  }
+  
+  .stationary-category-card {
+    flex: 1;
+    max-width: 120px;
+    height: 100px;
+    background-color: #00163B;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 10px;
+    color: #333333;
+    transition: all 0.3s ease-in-out; /* Smooth transition for active state */
+    cursor: pointer;
+  }
+  
+  /* Icon container */
+  .icon-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+  
+  .c-icon {
+    width: 20px;
+    height: 20px;
+    color: #333333;
+    font-size: 20px;
+    border-radius: 5px;
+  }
+  
+  /* Category title and count */
+  .category-title {
+    color: rgb(94, 112, 214);
+    font-size: 12px;
+    margin-top: auto;
+  }
+  
+  .category-count {
+    color: rgb(94, 112, 214);
+    font-size: 10px;
+    margin-top: 5px;
+  }
+  
+  /* Active card styles */
+  .stationary-category-card.active {
+    background-color: #b5d7df; /* Highlight color for the active card */
+    color: #333333; /* Text color change for the active card */
+    transform: scale(1.05); /* Slightly enlarge the active card */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  }
+  
+  .special-menu-container {
+    background-color: white;
+    color: white;
+    padding: 20px;
+    padding-left: 0; 
+    justify-content: flex-start;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 20px;
+    padding-left: 0; 
+  }
+  
+  .tabs {
+    display: flex;
+    margin-bottom: 20px;
+    padding-left: 70px;
+  }
+  
+  .tab {
+    background-color: #2e2e2e;
+    color: white;
+    height: 40px;
+    padding: 4px 4px;
+    border: none;
+    border-radius: 5px;
+    margin-right: 10px;
+    cursor: pointer;
+    font-size: 11px;
+  }
+  
+  .tab.active {
+    background-color: #3D67F5;
+    color: black;
+  }
+  
+  .book-table2 {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .book-table th,
+  .book-table td {
+    text-align: left;
+    padding: 10px;
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #00163B;
+  }
+  
+  .book-table th{
+    background-color: white;
+    color: #00163B;
+  }
+  
+  .row.even {
+    background-color: #D2F7FF;
+  }
+  
+  .row.odd {
+    background-color:  rgba(210, 247, 255, 0.4);
+  }
+  
+  .book-image {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .description {
+    font-size: 12px;
+    margin: 5px 0;
+    color: #ADADAD;
+  }
+  
+  .availability {
+    color: #52c779;
+  }
+  
+  .actions {
+    text-align: center;
+  }
+  
+  .edit,.delete{
+    cursor: pointer;
+    margin-top: 15px;
+  }
+  
+  .delete{
+    color: red;
+    margin-left: 26px;
+  }
+  
+  
+  
+  ::-webkit-scrollbar
+  {
+  height: 4px;
+  }
+  
+  

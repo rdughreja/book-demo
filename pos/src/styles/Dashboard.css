@@ -94,8 +94,9 @@ justify-content: center;
 
 /* card Container */
 .grid {
-display: flex;
-gap: 60px; /* Space between cards */
+display: grid;
+grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px;  /* Space between cards */
 margin: 30px 0; /* Top and bottom  */
 
 }
@@ -123,7 +124,6 @@ font-size: 11px;
 
 .card-header i{
 margin-bottom: 3px;
-background-color: rgb(69, 93, 182);
 color: rgb(5, 5, 5);
 border-radius: 50%;       /* Make it circular */
 padding: 10px;  

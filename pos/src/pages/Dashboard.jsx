@@ -1,7 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css'
-import { useState } from 'react';
+
 
 const Dashboard = () => {
 
@@ -37,18 +37,22 @@ const Dashboard = () => {
     const handleNotificationClick = () => {
       navigate('/notification');  
     };
+
+    const handlePOSClick = () => {
+      navigate('/posbook');  
+    };
    
  return (
      <div className="dashboard-container">
         <div className="dashboard-header">
               <div className="dashboard-title"> 
-                 <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i>
+                 {/* <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i> */}
                  <h1>Dashboard</h1>
               </div>
          
                <div className="two-icon">
                   <div className="pos-btn">
-                     <button className='posbtn'>POS</button>
+                      <button className='posbtn' onClick={handlePOSClick}>POS</button>
                   </div>
                   <div className="bell">
                       <i className="fa-solid fa-bell note-bell" style={{color: "#00163B"}}  onClick={handleNotificationClick}></i>
@@ -63,7 +67,7 @@ const Dashboard = () => {
            <div className="card">
                <div className="card-header">
                    <h2>Daily Sales</h2>
-                   <i className="fa-solid fa-arrow-left" style={{fontSize:"13px"}}></i>
+                   <i className="fa-solid fa-dollar-sign" style={{fontSize:"13px"}}></i>
                </div>
 
                    <p className="card-value">Rs.2k</p>
@@ -81,7 +85,7 @@ const Dashboard = () => {
            <div className="card">
                <div className="card-header">
                    <h2>Monthly Revenue</h2>
-                   <i className="fa-solid fa-arrow-left" style={{fontSize:"13px"}}></i>
+                   <i className="fa-solid fa-book" style={{fontSize:"13px"}}></i>
                </div>
 
                    <p className="card-value">Rs.55k</p>
@@ -99,7 +103,7 @@ const Dashboard = () => {
            <div className="card">
                <div className="card-header">
                    <h2>Books Occupancy</h2>
-                   <i className="fa-solid fa-arrow-left" style={{fontSize:"13px"}}></i>
+                   <i className="fa-solid fa-layer-group" style={{fontSize:"13px"}}></i>
                </div>
 
                  <p className="card-value">290k Books</p>
@@ -112,6 +116,61 @@ const Dashboard = () => {
                  </div>
                
            </div>
+
+           <div className="card">
+               <div className="card-header">
+                   <h2>Monthly Revenue</h2>
+                   <i className="fa-solid fa-book" style={{fontSize:"13px"}}></i>
+               </div>
+
+                   <p className="card-value">Rs.55k</p>
+                   
+                   <div className="last-contant"> 
+                       <p className="card-date">1 Jan - 1 Feb</p>
+                       <div className="bar-chart">
+                          {monthlyRevenueData.map((height, index) => (
+                            <div key={index} style={{ height: `${height * 10}px` }}></div>
+                          ))}
+                      </div>
+                   </div >
+           </div>
+
+           <div className="card">
+               <div className="card-header">
+                   <h2>Monthly Revenue</h2>
+                   <i className="fa-solid fa-book" style={{fontSize:"13px"}}></i>
+               </div>
+
+                   <p className="card-value">Rs.55k</p>
+                   
+                   <div className="last-contant"> 
+                       <p className="card-date">1 Jan - 1 Feb</p>
+                       <div className="bar-chart">
+                          {monthlyRevenueData.map((height, index) => (
+                            <div key={index} style={{ height: `${height * 10}px` }}></div>
+                          ))}
+                      </div>
+                   </div >
+           </div>
+
+           
+           <div className="card">
+               <div className="card-header">
+                   <h2>Books Occupancy</h2>
+                   <i className="fa-solid fa-layer-group" style={{fontSize:"13px"}}></i>
+               </div>
+
+                 <p className="card-value">290k Books</p>
+                 <div className="last">
+                  <div className="bar-chart">
+                      {booksOccupancyData.map((height, index) => (
+                        <div key={index} style={{ height: `${height * 10}px` }}></div>
+                      ))}
+                  </div>
+                 </div>
+               
+           </div>
+
        </div>
 
        <div className="popular-books-row">

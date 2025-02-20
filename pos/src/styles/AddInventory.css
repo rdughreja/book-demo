@@ -1,0 +1,127 @@
+.add-inventory-menu {
+    position: fixed;
+    top: 0;
+    right: -400px;
+    max-width: 400px;
+    height: 550px;
+    background-color: white;
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.3);
+    transition: right 0.3s ease-in-out;
+    z-index: 1000;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+  
+  .add-inventory-menu.open {
+    right: 0;
+  }
+  
+  .close-btn {
+    background: none;
+    border: none;
+    font-size: 20px;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    cursor: pointer;
+    color: black;
+  }
+  
+ .add-inventory-menu h2 {
+    text-align: start;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* Image Upload */
+  .image-upload {
+    position: relative;
+    margin-bottom: 15px;
+    text-align: center;
+  }
+  
+  .image-placeholder {
+    width: 100%;
+    height: 100px;
+    background: #d9d9d9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  .preview-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+  
+  input[type="file"] {
+    display: none;
+  }
+  
+  /* Form Layout */
+  label {
+    display: block;
+    text-align: left;
+    margin: 5px 0;
+    font-weight: bold;
+  }
+  
+  /* Make Name & Category + Quantity & Stock in Same Row */
+  .form-row {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .form-group {
+    flex: 1;
+  }
+  
+  .inventory-table .form-row input,
+  select {
+    width: 90%;
+    padding: 8px;
+    margin-bottom: 10px;
+    background-color: #D2F7FF;
+    border-radius: 5px;
+  }
+  
+  /* Form Buttons */
+  .form-buttons {
+    display: flex;
+    justify-content: end;
+    margin-top: 20px;
+    gap: 10px;
+  }
+  
+  .cancel-btn,
+  .save-btn {
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+  }
+  
+  .cancel-btn {
+    background: transparent;
+    text-decoration: underline;
+  }
+
+  .cancel-btn:hover {
+    background: transparent;
+    text-decoration: underline;
+    color: red;
+  }
+  
+  .save-btn {
+    background: #007bff;
+    color: white;
+  }
+  

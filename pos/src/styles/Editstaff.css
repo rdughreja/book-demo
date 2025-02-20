@@ -77,11 +77,11 @@
   
   .btn2 {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     margin-top: 15px;
   }
   
-  .cancel-button,
+  .btn2 .cancel-button,
   .submit-button {
     padding: 10px 15px;
     border: none;
@@ -91,19 +91,21 @@
     font-weight: bold;
   }
   
-  .cancel-button {
+  .btn2 .cancel-button {
     background-color: transparent;
     color: #00163B;
   }
   
+  .btn2 .cancel-button:hover {
+    color: red;
+  }
+
   .submit-button {
     background-color: #777979;
     color: white;
   }
   
-  .cancel-button:hover {
-    background-color: #777;
-  }
+  
   
   .submit-button:hover {
     background-color: #0056b3;

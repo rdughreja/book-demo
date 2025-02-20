@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import '../styles/Books.css';
 import RightSideMenu from '../componets/RightSideMenu';
+import AddStationaryCategory from '../componets/AddStationaryCategory';
 import EditBook from '../componets/EditBook';
 
 const Books = () => {
   const [books, setBooks] = useState([]);
   const [activeCategory, setActiveCategory] = useState('All');
   const [isRightMenuOpen, setIsRightMenuOpen] = useState(false);
+  const [isAddStationaryCategoryOpen, setIsAddStationaryCategoryOpen] = useState(false);
   const [isEditBookOpen, setIsEditBookOpen] = useState(false);
   const [selectedBook, setSelectedBook] = useState(null);
 
@@ -45,6 +47,11 @@ const Books = () => {
     setIsEditBookOpen(false); 
   };
 
+  const handleAddStationaryCategoryToggle = () => {
+    setIsAddStationaryCategoryOpen(true); 
+    setIsEditBookOpen(false); 
+  };
+
   const handleEditBookToggle = (book) => {
     setSelectedBook(book); 
     setIsEditBookOpen(true); 
@@ -63,8 +70,8 @@ const Books = () => {
       {/* Header */}
       <div className="book-header">
         <div className="book-title">
-          <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i>
-          <h1>Menu</h1>
+          {/* <i className="fa-solid fa-arrow-left back" style={{fontSize:"14px",color:'#608BC1',backgroundColor:"#D9D9D9"}}></i> */}
+          <h1>Books</h1>
         </div>
         <div className="book-two-icon">
           <div className="bell">
@@ -80,18 +87,20 @@ const Books = () => {
       <div className="sub-header">
         <span className="text">Categories</span>
         <div className="btn">
+        <button className="category" onClick={handleAddStationaryCategoryToggle}>Add New Category</button>
           <button className="category" onClick={handleRightMenuToggle}>Add Books</button>
         </div>
       </div>
 
       {/* Right Side Menu */}
       {isRightMenuOpen && <RightSideMenu isOpen={isRightMenuOpen} onClose={() => setIsRightMenuOpen(false)} />}
+      {isAddStationaryCategoryOpen && <AddStationaryCategory isOpen={isAddStationaryCategoryOpen} onClose={() => setIsAddStationaryCategoryOpen(false)} />}
       {isEditBookOpen && <EditBook isOpen={isEditBookOpen} onClose={() => setIsEditBookOpen(false)} book={selectedBook} onUpdate={handleUpdateBook} />} 
 
       {/* Categories */}
       <div className="categories-container">
         {[
-          { category: 'All', title: "All", count: "200k Books" },
+          { category: 'All', title: "All", count: `${books.length}` },
           { category: 'cbseEnglishMedium', title: "CBSE English Medium", count: "50k Books" },
           { category: 'cbseEnglishMediumWorkbook', title: "CBSE English Medium Workbook", count: "30k Books" },
           { category: 'cbseHindiMedium', title: "CBSE Hindi Medium", count: "40k Books" },
@@ -116,11 +125,13 @@ const Books = () => {
       {/* Books Table */}
       <div className="special-menu-container">
         <h1 className="title">Books in {activeCategory || "All Categories"}</h1>
-        <table className="book-table">
+        <table className="book-table2">
           <thead>
             <tr>
               <th>Product</th>
               <th>Product Name</th>
+              <th>Grade</th>
+              <th>Subject</th>
               <th>Item ID</th>
               <th>Stock</th>
               <th>Category</th>
@@ -139,6 +150,8 @@ const Books = () => {
                   <strong>{book.name}</strong>
                   <p className="description">{book.description}</p>
                 </td>
+                <td>{book.grade}</td>
+                <td>{book.subject}</td>
                 <td>{book.sku}</td>
                 <td>{book.stock_quantity} items</td>
                 <td>{book.category}</td>

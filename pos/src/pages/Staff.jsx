@@ -56,13 +56,13 @@ const Staff = () => {
       {/* Header */}
       <div className="staff-header">
         <div className="staff-title">
-          <i className="fa-solid fa-arrow-left back" style={{ fontSize: '13px' }}></i>
+          {/* <i className="fa-solid fa-arrow-left back" style={{ fontSize: '13px' }}></i> */}
           <h1>Staff Management</h1>
         </div>
 
         <div className="staff-two-icon">
           <div className="bell">
-            <i className="fa-solid fa-bell note-bell" onClick={() => navigate('/notification')}></i>
+            <i className="fa-solid fa-bell note-bell" style={{color:"#00163B"}} onClick={() => navigate('/notification')}></i>
           </div>
           <div className="profile">
             <img src="https://placehold.co/40x40" alt="User profile" className="profile-img" onClick={() => navigate('/Profile')} />

@@ -1,84 +1,128 @@
 const express = require('express');
 const { MongoClient } = require('mongodb');
+
 const app = express();
 const port = 3000;
 
 const uri = 'mongodb+srv://KrinaBhalodiya:krina22030401020@cluster0.lmttp.mongodb.net/';
 const client = new MongoClient(uri);
 
-app.get('/allproducts/category/:category', async (req, res) => {
-  const { category } = req.params;
-
-  try {
+// Connect once and reuse the client
+async function connectDB() {
+  if (!client.topology || !client.topology.isConnected()) {
     await client.connect();
-    const db = client.db('BookStore');
+  }
+  return client.db('BookStore');
+}
 
-    // Match the category by name
-    const matchStage = { $match: { name: category } };
-    const matchResult = await db.collection('categories').aggregate([matchStage]).toArray();
-    console.log('Match Stage Result:', matchResult);
+// Function to fetch products by category and optional subcategory
+async function getProducts(category, subcategory = null) {
+  const db = await connectDB();
 
-    // Lookup subcategories
-    const lookupSubcategoriesStage = {
+  const pipeline = [
+    { $match: { name: category } }, // Match category
+    {
       $lookup: {
         from: "subcategories",
         localField: "name",
         foreignField: "category",
         as: "subcategories"
       }
-    };
-    const lookupSubcategoriesResult = await db.collection('categories').aggregate([matchStage, lookupSubcategoriesStage]).toArray();
-    console.log('Lookup Subcategories Stage Result:', lookupSubcategoriesResult);
+    },
+    { $unwind: "$subcategories" },
+  ];
 
-    // Unwind subcategories
-    const unwindSubcategoriesStage = { $unwind: "$subcategories" };
-    const unwindSubcategoriesResult = await db.collection('categories').aggregate([matchStage, lookupSubcategoriesStage, unwindSubcategoriesStage]).toArray();
-    console.log('Unwind Subcategories Stage Result:', unwindSubcategoriesResult);
+  if (subcategory) {
+    pipeline.push({ $match: { "subcategories.subname": subcategory } }); // Match subcategory if provided
+  }
 
-    // Lookup stationeries
-    const lookupStationeriesStage = {
-      $lookup: {
-        from: "stationeries",
-        localField: "subcategories.subname",
-        foreignField: "subcategory",
-        as: "stationeries"
-      }
-    };
-    const lookupStationeriesResult = await db.collection('categories').aggregate([matchStage, lookupSubcategoriesStage, unwindSubcategoriesStage, lookupStationeriesStage]).toArray();
-    console.log('Lookup Stationeries Stage Result:', lookupStationeriesResult);
+  pipeline.push({
+    $facet: {
+      stationeries: [
+        {
+          $lookup: {
+            from: "stationeries",
+            localField: "subcategories.subname",
+            foreignField: "subcategory",
+            as: "stationeries"
+          }
+        },
+        { $unwind: "$stationeries" },
+        {
+          $project: {
+            _id: "$stationeries._id",
+            category: "$name",
+            subcategory: "$subcategories.subname",
+            ptype: "$stationeries.ptype",
+            company: "$stationeries.company",
+            product_name: "$stationeries.product_name",
+            price: "$stationeries.price",
+            color_options: "$stationeries.color_options",
+            description: "$stationeries.description",
+            image_link: "$stationeries.image_link",
+            min_stock_level: "$stationeries.min_stock_level",
+            status: "$stationeries.status",
+            stock_quantity: "$stationeries.stock_quantity"
+          }
+        }
+      ],
+      books: [
+        {
+          $lookup: {
+            from: "books",
+            localField: "subcategories.subname",
+            foreignField: "subcategory",
+            as: "books"
+          }
+        },
+        { $unwind: "$books" },
+        {
+          $project: {
+            _id: "$books._id",
+            category: "$name",
+            subcategory: "$subcategories.subname",
+            grade: "$books.grade",
+            subject: "$books.subject",
+            price: "$books.price",
+            publisher: "$books.publisher",
+            author: "$books.author",
+            board: "$books.board",
+            medium: "$books.medium",
+            min_stock_level: "$books.min_stock_level",
+            status: "$books.status",
+            stock_quantity: "$books.stock_quantity",
+            image_link: "$books.image_link",
+            product_name: "$books.product_name"
+          }
+        }
+      ]
+    }
+  });
 
-    // Unwind stationeries
-    const unwindStationeriesStage = { $unwind: "$stationeries" };
-    const unwindStationeriesResult = await db.collection('categories').aggregate([matchStage, lookupSubcategoriesStage, unwindSubcategoriesStage, lookupStationeriesStage, unwindStationeriesStage]).toArray();
-    console.log('Unwind Stationeries Stage Result:', unwindStationeriesResult);
+  return db.collection('categories').aggregate(pipeline).toArray();
+}
 
-    // Project the final result
-    const projectStage = {
-      $project: {
-        _id: "$stationeries._id",
-        category: "$name",
-        subcategory: "$subcategories.subname",
-        ptype: "$stationeries.ptype",
-        company: "$stationeries.company",
-        product_name: "$stationeries.product_name",
-        price: "$stationeries.price",
-        color_options: "$stationeries.color_options",
-        description: "$stationeries.description",
-        image_link: "$stationeries.image_link",
-        min_stock_level: "$stationeries.min_stock_level",
-        status: "$stationeries.status",
-        stock_quantity: "$stationeries.stock_quantity"
-      }
-    };
-    const finalResult = await db.collection('categories').aggregate([matchStage, lookupSubcategoriesStage, unwindSubcategoriesStage, lookupStationeriesStage, unwindStationeriesStage, projectStage]).toArray();
-    console.log('Final Aggregation Result:', finalResult);
-
-    res.status(200).json(finalResult);
+// Route to fetch products by category
+app.get('/allproducts/category/:category', async (req, res) => {
+  try {
+    const { category } = req.params;
+    const result = await getProducts(category);
+    res.status(200).json(result);
   } catch (error) {
     console.error('Error:', error);
     res.status(500).json({ error: error.message });
-  } finally {
-    await client.close();
+  }
+});
+
+// Route to fetch products by category and subcategory
+app.get('/allproducts/category/:category/subcategory/:subcategory', async (req, res) => {
+  try {
+    const { category, subcategory } = req.params;
+    const result = await getProducts(category, subcategory);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
   }
 });
 

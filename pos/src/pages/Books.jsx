@@ -19,7 +19,7 @@ const Books = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/fetch/allBooks');
+        const response = await axios.get('http://localhost:3001/allproducts/category/Books');
         setBooks(response.data);
       } catch (error) {
         console.error('Error fetching books:', error);
@@ -28,19 +28,19 @@ const Books = () => {
     fetchBooks();
   }, []);
 
-  const handleCardClick = async (category) => {
-    setActiveCategory(category);
-    try {
-      const response = await axios.get(
-        category === 'All'
-          ? 'http://localhost:5000/api/fetch/allBooks'
-          : `http://localhost:5000/api/fetch/books?category=${category}`
-      );
-      setBooks(response.data);
-    } catch (error) {
-      console.error('Error fetching books:', error);
-    }
-  };
+  // const handleCardClick = async (category) => {
+  //   setActiveCategory(category);
+  //   try {
+  //     const response = await axios.get(
+  //       category === 'All'
+  //         ? 'http://localhost:5000/api/fetch/allBooks'
+  //         : `http://localhost:5000/api/fetch/books?category=${category}`
+  //     );
+  //     setBooks(response.data);
+  //   } catch (error) {
+  //     console.error('Error fetching books:', error);
+  //   }
+  // };
 
   const handleRightMenuToggle = () => {
     setIsRightMenuOpen(true); 
@@ -114,7 +114,7 @@ const Books = () => {
           <div
             key={category.category}
             className={`category-card ${activeCategory === category.category ? "active" : ""}`}
-            onClick={() => handleCardClick(category.category)}
+            // onClick={() => handleCardClick(category.category)}
           >
             <div className="category-title">{category.title}</div>
             <div className="category-count">{category.count}</div>
@@ -144,15 +144,15 @@ const Books = () => {
             {books.map((book, index) => (
               <tr key={index} className={index % 2 === 0 ? "row even" : "row odd"}>
                 <td>
-                  <img src={book.image} alt="Book" className="book-image" />
+                  <img src={book.image_link} alt="Book" className="book-image" />
                 </td>
                 <td>
-                  <strong>{book.name}</strong>
+                  <strong>{book.product_name}</strong>
                   <p className="description">{book.description}</p>
                 </td>
                 <td>{book.grade}</td>
                 <td>{book.subject}</td>
-                <td>{book.sku}</td>
+                <td>{book._id}</td>
                 <td>{book.stock_quantity} items</td>
                 <td>{book.category}</td>
                 <td>Rs. {book.price}</td>

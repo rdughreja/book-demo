@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import '../styles/Dashboard.css'
+import { ChartPie,LibraryBig,Database } from 'lucide-react';
 
 
 const Dashboard = () => {
@@ -67,18 +68,19 @@ const Dashboard = () => {
            <div className="card">
                <div className="card-header">
                    <h2>Daily Sales</h2>
-                   <i className="fa-solid fa-dollar-sign" style={{fontSize:"13px"}}></i>
-               </div>
+                   <ChartPie color="green" size={19}/>
+                   </div>
 
                    <p className="card-value">Rs.2k</p>
 
                    <div className="last-contant">
                        <p className="card-date">8 February 2024</p>
-                          <div className="bar-chart">
+                          <Database/>
+                          {/* <div className="bar-chart">
                               {dailySalesData.map((height, index) => (
                                 <div key={index} style={{ height: `${height * 10}px` }}></div>
                               ))}
-                          </div>
+                          </div> */}
                    </div>  
            </div>
 
@@ -119,19 +121,20 @@ const Dashboard = () => {
 
            <div className="card">
                <div className="card-header">
-                   <h2>Monthly Revenue</h2>
-                   <i className="fa-solid fa-book" style={{fontSize:"13px"}}></i>
+                   <h2>Daily Sales</h2>
+                  <ChartPie color="#f50f0f" size={19}/>
                </div>
 
-                   <p className="card-value">Rs.55k</p>
+                   <p className="card-value">200 books</p>
                    
                    <div className="last-contant"> 
-                       <p className="card-date">1 Jan - 1 Feb</p>
-                       <div className="bar-chart">
+                       <p className="card-date">8 February 2025</p>
+                       <LibraryBig/>
+                       {/* <div className="bar-chart">
                           {monthlyRevenueData.map((height, index) => (
                             <div key={index} style={{ height: `${height * 10}px` }}></div>
                           ))}
-                      </div>
+                      </div> */}
                    </div >
            </div>
 
@@ -141,7 +144,7 @@ const Dashboard = () => {
                    <i className="fa-solid fa-book" style={{fontSize:"13px"}}></i>
                </div>
 
-                   <p className="card-value">Rs.55k</p>
+                   <p className="card-value">5500 books</p>
                    
                    <div className="last-contant"> 
                        <p className="card-date">1 Jan - 1 Feb</p>
@@ -160,7 +163,7 @@ const Dashboard = () => {
                    <i className="fa-solid fa-layer-group" style={{fontSize:"13px"}}></i>
                </div>
 
-                 <p className="card-value">290k Books</p>
+                 <p className="card-value">29000 Books</p>
                  <div className="last">
                   <div className="bar-chart">
                       {booksOccupancyData.map((height, index) => (

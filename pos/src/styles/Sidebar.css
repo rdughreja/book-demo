@@ -30,7 +30,7 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-  padding-top: 30px;
+  padding-top: 20px;
   padding-bottom: 10px;
   margin-bottom: 10px;
 }
@@ -38,6 +38,14 @@
 .logo-text{
   color:#608BC1;
   font-size: 18px;
+}
+
+.hamburger-btn {
+  background: none;
+  border: 1px solid red;
+  font-size: 22px;
+  color: white;
+  cursor: pointer;
 }
 
 .sidebar-menu {
@@ -140,3 +148,4 @@ display: flex;            /* Use flexbox to center the icon */
 align-items: center;      /* Vertically center the icon */
 justify-content: center;  /* Horizontally center the icon */
 }
+

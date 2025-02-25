@@ -20,6 +20,10 @@ const Sidebar = () => {
      <div className="sidebar-container">
 
        <div className="sidebar">  
+
+       <button className="hamburger-btn" >
+                <i className="fa-solid fa-bars"></i>
+             </button>
           <div className='logo'>
             <span className='logo-text'>BOOKSTORE</span>
           </div>

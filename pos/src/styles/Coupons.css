@@ -91,3 +91,14 @@
     border-radius: 4px;
   }
   
+
+  /* Responsive Design */
+@media (max-width: 768px) {
+  .coupons-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .coupon-card {
+    padding: 10px;
+  }
+}

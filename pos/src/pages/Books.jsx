@@ -19,7 +19,7 @@ const Books = () => {
   useEffect(() => {
     const fetchBooks = async () => {
       try {
-        const response = await axios.get('http://localhost:3001/allproducts/category/Books');
+        const response = await axios.get('http://localhost:5000/api/fetch/allBooks');
         setBooks(response.data);
       } catch (error) {
         console.error('Error fetching books:', error);

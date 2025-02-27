@@ -127,7 +127,7 @@ app.get('/schools/:schoolId/board/:board/medium/:medium/grade/:grade', async (re
     res.status(200).json(result);
   } catch (error) {
     console.error('Error:', error);
-    res.status500).json({ error: error.message });
+    res.status(500).json({ error: error.message });
   }
 });
 

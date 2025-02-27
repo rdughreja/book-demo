@@ -5,8 +5,8 @@
   height: 100%;
 }
 
-h1{
-  color: white;
+ .dashboard-title h1{
+  color: #00163B;
   font-weight: 100;
   font-size: 23px;
   padding-left: 10px;
@@ -116,6 +116,7 @@ display: flex;
 justify-content: space-between;
 align-items: center;
 }
+
 .card-header h2{
 font-weight: lighter;
 color:#00163B;
@@ -146,6 +147,7 @@ margin: 8px 0; /* Spacing around the value */
   align-items: end;
   width: 100%;
   margin-top: 30px;
+  height: 100px;
 }
 
 .last{
@@ -284,3 +286,84 @@ flex-direction: column; /* Makes book-title and book-author stack */
 text-align: end;
 width: 120px;
 }
+
+/* Responsive Design */
+@media (max-width: 1200px) {
+  .dashboard-container {
+    width: 100%; /* Full width for better spacing */
+    padding: 20px;
+  }
+
+  .dashboard-header {
+    display: flex;
+    flex-wrap: wrap;  /* Ensure elements stay in one row */
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+
+  .two-icon {
+    margin-left: auto; /* Push to the right */
+    display: flex;
+    gap: 10px;
+  }
+
+  .grid {
+    grid-template-columns: repeat(2, 1fr); /* 2 cards per row on medium screens */
+  }
+
+  .popular-books {
+    width: 100%; /* Full width for better spacing */
+  }
+}
+
+/* Mobile Screens */
+@media (max-width: 768px) {
+  .dashboard-container {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .dashboard-title h1 {
+    font-size: 20px; /* Slightly smaller title */
+  }
+
+  .dashboard-header {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .two-icon {
+    display: flex;
+    margin-left: auto; /* Keep icons aligned to the right */
+    gap: 10px;
+  }
+
+  /* Cards Layout */
+  .grid {
+    grid-template-columns: 1fr; /* Stack cards in one column */
+  }
+
+  .card {
+    width: 90%;
+  }
+
+  /* Popular Books & Stationery */
+  .popular-books-row {
+    flex-direction: column;
+  }
+
+  .popular-books {
+    width: 90%;
+    height: auto;
+  }
+
+  .book-card {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+

@@ -114,7 +114,7 @@ const Stationary = () => {
       {/* Books Table */}
       <div className="special-menu-container">
         <h1 className="title">Stationary in {activeCategory || "All Categories"}</h1>
-        <table className="book-table">
+        <table className="book-table1">
           <thead>
             <tr>
               <th>Product</th>

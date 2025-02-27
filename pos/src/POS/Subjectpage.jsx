@@ -7,6 +7,11 @@ const books = [
   { id: 2, name: "Science TextBook", category: "Books", price: 299, image: "/assets/clg.png" },
 ];
 
+const notebook = [
+  { id: 5, name: "Notebook", category: "Stationery", price: 99, image: "/assets/clg.png" },
+  { id: 6, name: "Pen Set", category: "Stationery", price: 149, image: "/assets/clg.png" },
+];
+
 const stationery = [
   { id: 3, name: "Notebook", category: "Stationery", price: 99, image: "/assets/clg.png" },
   { id: 4, name: "Pen Set", category: "Stationery", price: 149, image: "/assets/clg.png" },
@@ -109,6 +114,23 @@ const Subjectpage = () => {
               ))}
             </div>
           </div>
+  
+          <div className="product-list">
+            <h2>Notebook</h2>
+            <div className="product-grid">
+              {notebook.map((item) => (
+                <div key={item.id} className="product-card2">
+                  <img src={item.image} alt={item.name} className="product-image" />
+                  <div className="addtocart-book">
+                    <h3>{item.name}</h3>
+                    <p className="price">₹{item.price}</p>
+                  </div>
+                  <button className="addtocart" onClick={() => addToCart(item)}>Add to Cart</button>
+                </div>
+              ))}
+            </div>
+          </div>
+          
         </div>
 
         {/* Cart Details */}

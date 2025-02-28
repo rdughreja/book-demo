@@ -4,6 +4,9 @@ const { MongoClient, ObjectId } = require('mongodb');
 const app = express();
 const port = 3000;
 
+// Add middleware to parse JSON bodies
+app.use(express.json());
+
 const uri = 'mongodb+srv://KrinaBhalodiya:krina22030401020@cluster0.lmttp.mongodb.net/';
 const client = new MongoClient(uri);
 
@@ -89,8 +92,8 @@ async function getBookSetByBoardMediumAndGrade(schoolId, board, medium, grade) {
   return result;
 }
 
-// Fetch products by category and optional subcategory
-async function getProducts(category, subcategory = null) {
+// Fetch products by category, optional subcategory, and optional ptype
+async function getProducts(category, subcategory = null, ptype = null) {
   const db = await connectDB();
   const pipeline = [
     { $match: { name: category } },
@@ -117,7 +120,22 @@ async function getProducts(category, subcategory = null) {
             as: "stationeries"
         }},
         { $unwind: "$stationeries" },
-        { $project: { _id: "$stationeries._id", category: "$name", subcategory: "$subcategories.subname", ptype: "$stationeries.ptype", company: "$stationeries.company", product_name: "$stationeries.product_name", price: "$stationeries.price", color_options: "$stationeries.color_options", description: "$stationeries.description", image_link: "$stationeries.image_link", min_stock_level: "$stationeries.min_stock_level", status: "$stationeries.status", stock_quantity: "$stationeries.stock_quantity" } }
+        ...(ptype ? [{ $match: { "stationeries.ptype": ptype } }] : []),
+        { $project: { 
+          _id: "$stationeries._id", 
+          category: "$name", 
+          subcategory: "$subcategories.subname", 
+          ptype: "$stationeries.ptype", 
+          company: "$stationeries.company", 
+          product_name: "$stationeries.product_name", 
+          price: "$stationeries.price", 
+          color_options: "$stationeries.color_options", 
+          description: "$stationeries.description", 
+          image_link: "$stationeries.image_link", 
+          min_stock_level: "$stationeries.min_stock_level", 
+          status: "$stationeries.status", 
+          stock_quantity: "$stationeries.stock_quantity" 
+        }}
       ],
       books: [
         { $lookup: {
@@ -127,12 +145,96 @@ async function getProducts(category, subcategory = null) {
             as: "books"
         }},
         { $unwind: "$books" },
-        { $project: { _id: "$books._id", category: "$name", subcategory: "$subcategories.subname", grade: "$books.grade", subject: "$books.subject", price: "$books.price", publisher: "$books.publisher", author: "$books.author", board: "$books.board", medium: "$books.medium", min_stock_level: "$books.min_stock_level", status: "$books.status", stock_quantity: "$books.stock_quantity", image_link: "$books.image_link", product_name: "$books.product_name" } }
+        { $project: { 
+          _id: "$books._id", 
+          category: "$name", 
+          subcategory: "$subcategories.subname", 
+          grade: "$books.grade", 
+          subject: "$books.subject", 
+          price: "$books.price", 
+          publisher: "$books.publisher", 
+          author: "$books.author", 
+          board: "$books.board", 
+          medium: "$books.medium", 
+          min_stock_level: "$books.min_stock_level", 
+          status: "$books.status", 
+          stock_quantity: "$books.stock_quantity", 
+          image_link: "$books.image_link", 
+          product_name: "$books.product_name" 
+        }}
       ]
     }
   });
 
   return db.collection('categories').aggregate(pipeline).toArray();
+}
+
+// ADD NEW DATA FUNCTIONS
+
+// Add a new school
+async function addSchool(schoolData) {
+  const db = await connectDB();
+  const result = await db.collection('school').insertOne(schoolData);
+  return { _id: result.insertedId, ...schoolData };
+}
+
+// Add a new board to an existing school
+async function addBoard(schoolId, boardData) {
+  const db = await connectDB();
+  const result = await db.collection('school').updateOne(
+    { _id: new ObjectId(schoolId) },
+    { $push: { boards: boardData } }
+  );
+  return result;
+}
+
+// Add a new medium to an existing board
+async function addMedium(schoolId, board, mediumData) {
+  const db = await connectDB();
+  const result = await db.collection('school').updateOne(
+    { _id: new ObjectId(schoolId), "boards.board": board },
+    { $push: { "boards.$.mediums": mediumData } }
+  );
+  return result;
+}
+
+// Add a new grade to an existing medium
+async function addGrade(schoolId, board, medium, gradeData) {
+  const db = await connectDB();
+  const school = await db.collection('school').findOne({ _id: new ObjectId(schoolId) });
+  
+  const boardIndex = school.boards.findIndex(b => b.board === board);
+  if (boardIndex === -1) return { error: "Board not found" };
+  
+  const mediumIndex = school.boards[boardIndex].mediums.findIndex(m => m.medium === medium);
+  if (mediumIndex === -1) return { error: "Medium not found" };
+  
+  const result = await db.collection('school').updateOne(
+    { _id: new ObjectId(schoolId) },
+    { $push: { [`boards.${boardIndex}.mediums.${mediumIndex}.grades`]: gradeData } }
+  );
+  return result;
+}
+
+// Update or set book set for a specific grade
+async function updateBookSet(schoolId, board, medium, grade, bookSetData) {
+  const db = await connectDB();
+  const school = await db.collection('school').findOne({ _id: new ObjectId(schoolId) });
+  
+  const boardIndex = school.boards.findIndex(b => b.board === board);
+  if (boardIndex === -1) return { error: "Board not found" };
+  
+  const mediumIndex = school.boards[boardIndex].mediums.findIndex(m => m.medium === medium);
+  if (mediumIndex === -1) return { error: "Medium not found" };
+  
+  const gradeIndex = school.boards[boardIndex].mediums[mediumIndex].grades.findIndex(g => g.grade === parseInt(grade));
+  if (gradeIndex === -1) return { error: "Grade not found" };
+  
+  const result = await db.collection('school').updateOne(
+    { _id: new ObjectId(schoolId) },
+    { $set: { [`boards.${boardIndex}.mediums.${mediumIndex}.grades.${gradeIndex}.book_set`]: bookSetData } }
+  );
+  return result;
 }
 
 // Routes
@@ -210,6 +312,7 @@ app.get('/schools/:schoolId/board/:board/medium/:medium/grade/:grade/bookset', a
   }
 });
 
+// Route to fetch products by category and optional subcategory
 app.get('/allproducts/category/:category', async (req, res) => {
   try {
     const { category } = req.params;
@@ -221,10 +324,149 @@ app.get('/allproducts/category/:category', async (req, res) => {
   }
 });
 
+// Route to fetch products by category, subcategory, and optional ptype
 app.get('/allproducts/category/:category/subcategory/:subcategory', async (req, res) => {
   try {
     const { category, subcategory } = req.params;
-    const result = await getProducts(category, subcategory);
+    const { ptype } = req.query; // Get ptype from query parameters
+    const result = await getProducts(category, subcategory, ptype);
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// POST ROUTES
+
+// Route to add a new school
+app.post('/schools', async (req, res) => {
+  try {
+    const schoolData = req.body;
+    const result = await addSchool(schoolData);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to add a new board to an existing school
+app.post('/schools/:schoolId/boards', async (req, res) => {
+  try {
+    const { schoolId } = req.params;
+    const boardData = req.body;
+    const result = await addBoard(schoolId, boardData);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to add a new medium to an existing board
+app.post('/schools/:schoolId/boards/:board/mediums', async (req, res) => {
+  try {
+    const { schoolId, board } = req.params;
+    const mediumData = req.body;
+    const result = await addMedium(schoolId, board, mediumData);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to add a new grade to an existing medium
+app.post('/schools/:schoolId/boards/:board/mediums/:medium/grades', async (req, res) => {
+  try {
+    const { schoolId, board, medium } = req.params;
+    const gradeData = req.body;
+    const result = await addGrade(schoolId, board, medium, gradeData);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Route to update or set book set for a specific grade
+app.post('/schools/:schoolId/boards/:board/mediums/:medium/grades/:grade/bookset', async (req, res) => {
+  try {
+    const { schoolId, board, medium, grade } = req.params;
+    const bookSetData = req.body;
+    const result = await updateBookSet(schoolId, board, medium, parseInt(grade), bookSetData);
+    res.status(201).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// DELETE ROUTES
+
+// Delete a school
+app.delete('/schools/:schoolId', async (req, res) => {
+  try {
+    const { schoolId } = req.params;
+    const db = await connectDB();
+    const result = await db.collection('school').deleteOne({ _id: new ObjectId(schoolId) });
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete a board from a school
+app.delete('/schools/:schoolId/boards/:board', async (req, res) => {
+  try {
+    const { schoolId, board } = req.params;
+    const db = await connectDB();
+    const result = await db.collection('school').updateOne(
+      { _id: new ObjectId(schoolId) },
+      { $pull: { boards: { board: board } } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete a medium from a board
+app.delete('/schools/:schoolId/boards/:board/mediums/:medium', async (req, res) => {
+  try {
+    const { schoolId, board, medium } = req.params;
+    const db = await connectDB();
+    const result = await db.collection('school').updateOne(
+      { _id: new ObjectId(schoolId), "boards.board": board },
+      { $pull: { "boards.$.mediums": { medium: medium } } }
+    );
+    res.status(200).json(result);
+  } catch (error) {
+    console.error('Error:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// Delete a grade from a medium
+app.delete('/schools/:schoolId/boards/:board/mediums/:medium/grades/:grade', async (req, res) => {
+  try {
+    const { schoolId, board, medium, grade } = req.params;
+    const db = await connectDB();
+    const school = await db.collection('school').findOne({ _id: new ObjectId(schoolId) });
+    
+    const boardIndex = school.boards.findIndex(b => b.board === board);
+    if (boardIndex === -1) return res.status(404).json({ error: "Board not found" });
+    
+    const mediumIndex = school.boards[boardIndex].mediums.findIndex(m => m.medium === medium);
+    if (mediumIndex === -1) return res.status(404).json({ error: "Medium not found" });
+    
+    const result = await db.collection('school').updateOne(
+      { _id: new ObjectId(schoolId) },
+      { $pull: { [`boards.${boardIndex}.mediums.${mediumIndex}.grades`]: { grade: parseInt(grade) } } }
+    );
     res.status(200).json(result);
   } catch (error) {
     console.error('Error:', error);
